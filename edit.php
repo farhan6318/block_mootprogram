@@ -154,7 +154,7 @@ if ($id) {
             if ($user) {
                 $userpic = new \user_picture($user);
                 $userpic->size = true;
-                $data->speakerholder .= $OUTPUT->render($userpic, $PAGE);
+                $data->speakerholder .= "<br/><br/>".$OUTPUT->render($userpic, $PAGE);
             }
 
             $data->speakerholder .= '';
