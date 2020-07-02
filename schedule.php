@@ -71,6 +71,8 @@ foreach ($dates as $date) {
             $roomname = get_string('session', 'block_mootprogram');
         }
 
+        $presentation->roomName = $roomname;
+
         if ($presentation->userid) {
 
             $user = $DB->get_record('user', ['id' => $presentation->userid]);
@@ -99,6 +101,15 @@ foreach ($dates as $date) {
            $imageurl = 'https://picsum.photos/20'.rand(0,9);
         }
         $presentation->imageurl = $imageurl;
+        $presentation->timeend = trim($presentation->timestart + ($presentation->length * 60));
+
+        $url = new moodle_url('/course/view.php', ['id' => $courseid]);
+        $presentation->sessionurl = $url->out(false);
+        $eurl = new moodle_url('/blocks/mootprogram/editschedule.php', ['id' => $presentation->id]);
+        $presentation->editUrl = $eurl->out(false);
+        $uurl = new moodle_url('/user/profile.php', ['id' => $presentation->userid]);
+        $presentation->userLink = $uurl->out(false);
+
         $presentationsdata[] = $presentation;
     }
     if (count($rows) == 0) {
@@ -106,11 +117,11 @@ foreach ($dates as $date) {
     } else {
         $active = null;
     }
+
     $rows[] = [
         'timestart' => trim($date->days),
         'presentation' => $presentationsdata,
         'active' => $active,
-        'roomName' => $roomname,
     ];
 
 }
