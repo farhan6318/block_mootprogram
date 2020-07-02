@@ -69,8 +69,8 @@ $mform->display();
 echo $OUTPUT->single_button(new moodle_url('/blocks/mootprogram/edit.php', []),
     'Add new presentation');
 $translationtable = new block_mootprogram\scheduletable($search);
-$translationtable->pagesize = 20;
+$translationtable->pagesize = 200;
 $translationtable->define_baseurl(new moodle_url('/blocks/mootprogram/editschedule.php'));
 
-$translationtable->out(20, false);
+$translationtable->out(200, false);
 echo $OUTPUT->footer();
