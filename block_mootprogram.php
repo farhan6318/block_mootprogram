@@ -99,10 +99,18 @@ class block_mootprogram extends block_base {
                 $roomname = get_string('session', 'block_mootprogram');
             }
 
-            $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
+            $url = new moodle_url('/course/view.php', ['id' => $courseid]);
+            $sessionurl = $url->out(false);
+            $eurl = new moodle_url('/blocks/mootprogram/editschedule.php', ['id' => $happeningnowrecord->id]);
+            $editurl = $eurl->out(false);
+            $uurl = new moodle_url('/user/profile.php', ['id' => $happeningnowrecord->userid]);
+            $userurl = $uurl->out(false);
             $data['happeningnowrecords'][$happeningnowrecord->id]->presenterlist = $presenterlist;
             $data['happeningnowrecords'][$happeningnowrecord->id]->sessionurl = $sessionurl;
+            $data['happeningnowrecords'][$happeningnowrecord->id]->editUrl = $editurl;
+            $data['happeningnowrecords'][$happeningnowrecord->id]->userLink = $userurl;
             $data['happeningnowrecords'][$happeningnowrecord->id]->roomName = $roomname;
+            $data['happeningnowrecords'][$happeningnowrecord->id]->timeend = $happeningnowrecord->timeend = trim($happeningnowrecord->timestart + ($happeningnowrecord->length * 60));
         }
 
         $upcomingrecords = $DB->get_records_select('block_mootprogram', 'timestart > ?', [time() + (HOURSECS / 2)], 'timestart', '*',0, 8);
@@ -166,10 +174,18 @@ class block_mootprogram extends block_base {
                 $roomname = get_string('session', 'block_mootprogram');
             }
 
-            $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
+            $url = new moodle_url('/course/view.php', ['id' => $courseid]);
+            $sessionurl = $url->out(false);
+            $eurl = new moodle_url('/blocks/mootprogram/editschedule.php', ['id' => $upcomingrecord->id]);
+            $editurl = $eurl->out(false);
+            $uurl = new moodle_url('/user/profile.php', ['id' => $upcomingrecord->userid]);
+            $userurl = $uurl->out(false);
             $data['upcomingrecords'][$upcomingrecord->id]->presenterlist = $presenterlist;
             $data['upcomingrecords'][$upcomingrecord->id]->sessionurl = $sessionurl;
+            $data['upcomingrecords'][$upcomingrecord->id]->editUrl = $editurl;
+            $data['upcomingrecords'][$upcomingrecord->id]->userLink = $userurl;
             $data['upcomingrecords'][$upcomingrecord->id]->roomName = $roomname;
+            $data['upcomingrecords'][$upcomingrecord->id]->timeend = $upcomingrecord->timeend = trim($upcomingrecord->timestart + ($upcomingrecord->length * 60));
         }
 
         $this->content->text =  $OUTPUT->render_from_template('block_mootprogram/programblock', [

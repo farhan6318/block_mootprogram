@@ -17,3 +17,5 @@ $string['upcomingsessions'] = 'Coming up soon';
 $string['programschedule'] = 'Program Schedule';
 $string['sponsercardtext'] = 'Visit our sponsors and check the stall and get a badge and do something';
 $string['cafecardtext'] = 'Meet and greet moodlers from all walks of life.';
+$string['timea'] = '%d %B %I:%M %p';
+$string['timeb'] = '%I:%M %p';
