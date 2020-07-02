@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+require_once($CFG->dirroot . '/blocks/mootprogram/lib.php');
+
 class block_mootprogram extends block_base {
     function init() {
         $this->title = get_string('pluginname','block_mootprogram') ;
@@ -135,25 +137,18 @@ class block_mootprogram extends block_base {
                 }
             }
 
-            if ($happeningnowrecord->room == 'Education') {
-                $courseid = 40;
-            } else if ($happeningnowrecord->room == 'Technology') {
-                $courseid = 41;
-            } else if ($happeningnowrecord->room == 'Quiet') {
-                $courseid = 50;
-            } else if ($happeningnowrecord->room == 'Chinese') {
-                $courseid = 49;
-            } else if ($happeningnowrecord->room == 'Spanish') {
-                $courseid = 51;
-            } else if ($happeningnowrecord->room == 'German') {
-                $courseid = 52;
-            }  else if ($happeningnowrecord->room == 'French') {
-                $courseid = 53;
+            $courseid = course_id_mapper($happeningnowrecord);
+
+            try {
+                $roomname = get_course($courseid)->fullname;
+            } catch (dml_exception $e) {
+                $roomname = get_string('session', 'block_mootprogram');
             }
 
             $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
             $data['happeningnowrecords'][$happeningnowrecord->id]->presenterlist = $presenterlist;
             $data['happeningnowrecords'][$happeningnowrecord->id]->sessionurl = $sessionurl;
+            $data['happeningnowrecords'][$happeningnowrecord->id]->roomName = $roomname;
         }
 
         $upcomingrecords = $DB->get_records_select('block_mootprogram', 'timestart > ?', [time() + (HOURSECS / 2)], 'timestart', '*',0, 8);
@@ -209,25 +204,18 @@ class block_mootprogram extends block_base {
                 }
             }
 
-            if ($upcomingrecord->room == 'Education') {
-                $courseid = 40;
-            } else if ($upcomingrecord->room == 'Technology') {
-                $courseid = 41;
-            } else if ($upcomingrecord->room == 'Quiet') {
-                $courseid = 50;
-            } else if ($upcomingrecord->room == 'Chinese') {
-                $courseid = 49;
-            } else if ($upcomingrecord->room == 'Spanish') {
-                $courseid = 51;
-            } else if ($upcomingrecord->room == 'German') {
-                $courseid = 52;
-            }  else if ($upcomingrecord->room == 'French') {
-                $courseid = 53;
+            $courseid = course_id_mapper($upcomingrecord);
+
+            try {
+                $roomname = get_course($courseid)->fullname;
+            } catch (dml_exception $e) {
+                $roomname = get_string('session', 'block_mootprogram');
             }
 
             $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
             $data['upcomingrecords'][$upcomingrecord->id]->presenterlist = $presenterlist;
             $data['upcomingrecords'][$upcomingrecord->id]->sessionurl = $sessionurl;
+            $data['upcomingrecords'][$upcomingrecord->id]->roomName = $roomname;
         }
 
         //die(print_object(array_values($data['upcomingrecords'])));

@@ -1,6 +1,7 @@
 <?php
 
 require('../../config.php');
+require_once($CFG->dirroot . '/blocks/mootprogram/lib.php');
 
 $context = context_system::instance();
 $PAGE->set_context($context);
@@ -49,6 +50,7 @@ foreach ($dates as $date) {
                 )->out();
             }
         }
+
         if ($presentation->speakerlist) {
             $presenterlist = [];
             $speakers = explode(',', $presentation->speakerlist);
@@ -63,6 +65,15 @@ foreach ($dates as $date) {
             $presenterlist = rtrim(implode(",", $presenterlist), ",");
         }
         $presentation->presenterlist = $presenterlist;
+
+        $courseid = course_id_mapper($presentation);
+
+        try {
+            $roomname = get_course($courseid)->fullname;
+        } catch (dml_exception $e) {
+            $roomname = get_string('session', 'block_mootprogram');
+        }
+
         if ($presentation->userid) {
 
             $user = $DB->get_record('user', ['id' => $presentation->userid]);
@@ -101,7 +112,8 @@ foreach ($dates as $date) {
     $rows[] = [
         'timestart' => trim($date->days),
         'presentation' => $presentationsdata,
-        'active' => $active
+        'active' => $active,
+        'roomName' => $roomname,
     ];
 
 }

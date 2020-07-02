@@ -37,34 +37,18 @@
     </div>
 
     <div class="container-fluid mt-5">
-
         <div class="row mb-3">
             <div class="col">
-                <h2> Upcoming sessions </h2>
+                <h2>{{#str}} upcomingsessions, block_mootprogram {{/str}}</h2>
             </div>
         </div>
 
         <div class="row">
             {{#upcomingrecord}}
-            <div class="col-md-3  col-sm-6  d-flex">
-                <div class="card mb-2 profile-card-2">
-                    <img class="card-img-top" src="{{imageurl}}" alt="Card image cap" height="135px">
-                    <div class="card-body">
-                        <a href="{{sessionurl}}" class="a-color">{{#userdate}} {{timestart}}, {{#str}} strftimerecent {{/str}} {{/userdate}}</a>
-                        <h6 class="card-title">{{title}}</h6>
-                        <p class="card-text">{{presentername}}</p>
-                        <a href="{{sessionurl}}" class="btn btn-light" >Session</a><br/>
-                        <a href="{{discussionlink}}" class="btn btn-light mt-2" >Discussion</a><br/>
-                        {{#issiteadmin}}
-                            <a href="https://events.moodle.com/blocks/mootprogram/edit.php?id={{id}}">Edit session</a>
-                        {{/issiteadmin}}
-                    </div>
+                <div class="col-md-3 col-sm-6 d-flex">
+                    {{> block_mootprogram/presentation }}
                 </div>
-            </div>
             {{/upcomingrecord}}
         </div>
-
-
     </div>
-
 </div>
