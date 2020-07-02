@@ -15,3 +15,5 @@ $string['navigatesponser'] = 'go to the sponser area';
 $string['navigatecafe'] = 'go to the networking area';
 $string['upcomingsessions'] = 'Coming up soon';
 $string['programschedule'] = 'Program Schedule';
+$string['sponsercardtext'] = 'Visit our sponsors and check the stall and get a badge and do something';
+$string['cafecardtext'] = 'Meet and greet moodlers from all walks of life.';

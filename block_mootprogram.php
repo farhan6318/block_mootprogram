@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+use core_course\external\course_summary_exporter;
+
 require_once($CFG->dirroot . '/blocks/mootprogram/lib.php');
 
 class block_mootprogram extends block_base {
@@ -175,7 +177,9 @@ class block_mootprogram extends block_base {
             'upcomingrecord' => array_values($data['upcomingrecords']),
             'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 43]),
             'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 42]),
-            'issiteadmin' => is_siteadmin()
+            'issiteadmin' => is_siteadmin(),
+            'sponserImg' => course_summary_exporter::get_course_image(get_course(43)),
+            'cafeImg' => course_summary_exporter::get_course_image(get_course(42)),
         ]);
 
         return $this->content;
