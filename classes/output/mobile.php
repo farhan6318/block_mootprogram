@@ -27,6 +27,7 @@ namespace block_mootprogram\output;
 defined('MOODLE_INTERNAL') || die();
 
 require_once("$CFG->libdir/filestorage/file_storage.php");
+require_once($CFG->dirroot . '/blocks/mootprogram/lib.php');
 /**
  * Mobile output functions.
  */
@@ -66,32 +67,33 @@ class mobile {
                 $imageurl  = 'https://picsum.photos/20'.rand(0,9);
             }
 
-            if ($happeningnowrecord->room == 'Education') {
-                $courseid = 40;
-            } else if ($happeningnowrecord->room == 'Technology') {
-                $courseid = 41;
-            } else if ($happeningnowrecord->room == 'Quiet') {
-                $courseid = 50;
-            } else if ($happeningnowrecord->room == 'Chinese') {
-                $courseid = 49;
-            } else if ($happeningnowrecord->room == 'Spanish') {
-                $courseid = 51;
-            } else if ($happeningnowrecord->room == 'German') {
-                $courseid = 52;
-            }  else if ($happeningnowrecord->room == 'French') {
-                $courseid = 53;
-            }
+            $courseid = course_id_mapper($happeningnowrecord);
 
             $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
 
-            $presenter = '<a href="https://events.moodle.com/user/profile.php?id=545"><%presenter%> </a>';
+            $presenterlist = get_presenter_list($happeningnowrecord);
+            if ($presenterlist) {
+                $presenter = $presenterlist;
+            } else {
+                $presenter = \html_writer::link(new \moodle_url('/user/profile.php', ['id' => $happeningnowrecord->userid]),
+                    $DB->get_field('user', $DB->sql_fullname(), ['id' => $happeningnowrecord->userid]));
+            }
+
+            try {
+                $roomname = get_course($courseid)->fullname;
+            } catch (dml_exception $e) {
+                $roomname = get_string('session', 'block_mootprogram');
+            }
+
 
             $happeningnowrecorddata[] = [
                 'title' => $happeningnowrecord->title,
                 'description' => (strlen($happeningnowrecord->description) > 100) ? $happeningnowrecord->description : substr($happeningnowrecord->description, 0, 100)."...",
-                'presenter' => ($happeningnowrecord->userid) ? $DB->get_field('user', $DB->sql_fullname(), ['id' => $happeningnowrecord->userid]) : '',
+                'presenter' => $presenter,
                 'link' => $sessionurl,
                 'institute' => $happeningnowrecord->institute,
+                'discussionlink' => $happeningnowrecord->discussionlink,
+                'roomname' => $roomname,
                 'image' => '<img src="'.$imageurl.  '" width="100%" height="150px"/>',
             ];
         }

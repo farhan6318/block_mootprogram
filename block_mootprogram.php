@@ -64,17 +64,7 @@ class block_mootprogram extends block_base {
             }
             $presenterlist = null;
             if ($happeningnowrecord->speakerlist) {
-                $presenterlist = [];
-                $speakers = explode(',', $happeningnowrecord->speakerlist);
-                foreach ($speakers as $speaker) {
-                    $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => trim($speaker)]);
-                    if ($speakeruserid) {
-                        $presenterlist[] = "<a href='".$CFG->wwwroot."/user/profile.php?id=".$speakeruserid."'>".$speaker."</a>";
-                    } else {
-                        $presenterlist[] = $speaker;
-                    }
-                }
-                $presenterlist = rtrim(implode(",", $presenterlist), ", ");
+                $presenterlist = get_presenter_list($happeningnowrecord);
             }
             if ($happeningnowrecord->userid) {
 
@@ -139,17 +129,7 @@ class block_mootprogram extends block_base {
 
             $presenterlist = null;
             if ($upcomingrecord->speakerlist) {
-                $presenterlist = [];
-                $speakers = explode(',', $upcomingrecord->speakerlist);
-                foreach ($speakers as $speaker) {
-                    $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => trim($speaker)]);
-                    if ($speakeruserid) {
-                        $presenterlist[] = "<a href='".$CFG->wwwroot."/user/profile.php?id=".$speakeruserid."'>".$speaker."</a>";
-                    } else {
-                        $presenterlist[] = $speaker;
-                    }
-                }
-                $presenterlist = rtrim(implode(",", $presenterlist),", ");
+                $presenterlist = get_presenter_list($upcomingrecord);
             }
 
             if ($upcomingrecord->userid) {

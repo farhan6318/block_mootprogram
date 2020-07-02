@@ -30,6 +30,7 @@ defined('MOODLE_INTERNAL') || die;
 global $CFG;
 
 require_once($CFG->libdir . '/tablelib.php');
+require_once($CFG->dirroot . '/blocks/mootprogram/lib.php');
 
 /**
  * Class for the displaying the translation table.
@@ -51,10 +52,10 @@ class scheduletable extends \table_sql {
     public function __construct($search = '') {
         parent::__construct('schedule-table');
         // Define the list of columns to show.
-        $columns = ['title', 'room', 'timestart', 'edit'];
+        $columns = ['title', 'room', 'user' , 'image', 'timestart', 'edit'];
         $this->define_columns($columns);
         // Define the titles of columns to show in header.
-        $headers = ['Title', 'Room', 'Time start', get_string('edit')];
+        $headers = ['Title', 'Room', 'user', 'image',  'Time start', get_string('edit')];
         $this->define_headers($headers);
         $this->is_collapsible = false;
         $this->sortable(false);
@@ -88,6 +89,28 @@ class scheduletable extends \table_sql {
         $total = $DB->count_records_select('block_mootprogram', $wherestr, $params);
         foreach ($records as $record) {
             $record->timestart = userdate($record->timestart);
+
+
+            $fs = new \file_storage();
+            $file = $fs->get_file_by_id($record->image);
+            if ($file) {
+                $record->imageurl = \moodle_url::make_pluginfile_url(
+                    $file->get_contextid(),
+                    $file->get_component(),
+                    $file->get_filearea(),
+                    $file->get_itemid(),
+                    $file->get_filepath(),
+                    $file->get_filename()
+                )->out();
+            }
+
+            $record->user = \html_writer::link(new \moodle_url('/user/profile.php', ['id' => $record->userid]),
+                $DB->get_field('user', $DB->sql_fullname(), ['id' => $record->userid]));
+
+            $record->user .= "<br/><br/>". get_presenter_list($record);
+
+            $record->image = "<img src='".$record->imageurl."' width='30px' height='30px'/>";
+
             $this->rawdata[] = $record;
         }
         $this->pagesize($pagesize, $total);

@@ -49,17 +49,7 @@ foreach ($dates as $date) {
         }
         $presenterlist = null;
         if ($presentation->speakerlist) {
-            $presenterlist = [];
-            $speakers = explode(',', $presentation->speakerlist);
-            foreach ($speakers as $speaker) {
-                $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => trim($speaker)]);
-                if ($speakeruserid) {
-                    $presenterlist[] = "<a href='".$CFG->wwwroot."/user/profile.php?id=".$speakeruserid."'>".$speaker."</a>";
-                } else {
-                    $presenterlist[] = $speaker;
-                }
-            }
-            $presenterlist = rtrim(implode(",", $presenterlist), ", ");
+            $presenterlist = get_presenter_list($presentation);
         }
         $presentation->presenterlist = $presenterlist;
 
@@ -79,18 +69,9 @@ foreach ($dates as $date) {
             $userpictureurl = '';
             if ($user) {
                 $userpic = new \user_picture($user);
-                // If the user has uploaded a profile picture, use it.
-                /*if (!empty($userpic->user->picture)) {
-                    $userpic->link = false;
-                    $userpic->alttext = false;
-                    $user->size = 128;
-                    $userpic->visibletoscreenreaders = false;
-                    $userpic->class = "profile";
-                    $userpicture = $OUTPUT->render($userpic);
-                }*/
                 $userpic->size = true;
                 $userpictureurl = $userpic->get_url($PAGE)->out();
-                //$presentation->presentername = $user->firstname . ' ' . $user->lastname;
+                $presentation->presentername = $user->firstname . ' ' . $user->lastname;
                 $presentation->userpictureurl = $userpictureurl;
                 $presentation->profiledescription = $user->description;
             }

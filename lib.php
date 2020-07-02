@@ -37,3 +37,19 @@ function course_id_mapper(stdClass $presentation) {
         return 53;
     }
 }
+
+function get_presenter_list(stdClass $presentation) {
+    global $DB, $CFG;
+    $presenterlist = [];
+    $speakers = explode(',', $presentation->speakerlist);
+    foreach ($speakers as $speaker) {
+        $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => trim($speaker)]);
+        if ($speakeruserid) {
+            $presenterlist[] = \html_writer::link(new moodle_url('//user/profile.php', ['id' => $speakeruserid]), trim($speaker));;
+        } else {
+            $presenterlist[] = $speaker;
+        }
+    }
+    $presenterlist = rtrim(implode(", ", $presenterlist),",");
+    return $presenterlist;
+}
