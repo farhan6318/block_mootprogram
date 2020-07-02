@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+require_once($CFG->dirroot . '/blocks/mootprogram/lib.php');
+
 class block_mootprogram extends block_base {
     function init() {
         $this->title = get_string('pluginname','block_mootprogram') ;
@@ -28,54 +30,6 @@ class block_mootprogram extends block_base {
         $this->content = new stdClass;
 
         $data = [];
-        /*$highlightrecords = $DB->get_records_select('block_mootprogram', 'timestart > ? AND hightlight = 1', [time() - HOURSECS], 'timestart', '*',0, 3);
-        foreach ($highlightrecords as $highlightrecord) {
-            $data['highlightrecords'][$highlightrecord->id] = ($highlightrecord);
-            if ($imageid = $highlightrecord->image) {
-                $fs = new \file_storage();
-                $file = $fs->get_file_by_id($imageid);
-                if ($file) {
-                    $data['highlightrecords'][$highlightrecord->id]->imageurl = \moodle_url::make_pluginfile_url(
-                        $file->get_contextid(),
-                        $file->get_component(),
-                        $file->get_filearea(),
-                        $file->get_itemid(),
-                        $file->get_filepath(),
-                        $file->get_filename()
-                    )->out();
-                }
-            }
-            if ($highlightrecord->userid) {
-                $user = $DB->get_record('user', ['id' => $highlightrecord->userid]);
-                // User image.
-                $userpicture = '';
-                if ($user) {
-                    $userpic = new \user_picture($user);
-                    // If the user has uploaded a profile picture, use it.
-                    if (!empty($userpic->user->picture)) {
-                        $userpic->link = false;
-                        $userpic->alttext = false;
-                        $userpic->size = 128;
-                        $userpic->visibletoscreenreaders = false;
-                        $userpic->class = "mr-5";
-                        $userpicture = $OUTPUT->render($userpic);
-                    }
-                    $data['highlightrecords'][$highlightrecord->id]->presentername = $user->firstname . ' ' . $user->lastname;
-                    $data['highlightrecords'][$highlightrecord->id]->userpicture = $userpicture;
-                    $data['highlightrecords'][$highlightrecord->id]->profiledescription = $user->description;
-                }
-            }
-            if ($highlightrecord->room == 'Learning') {
-                $sessionurl = "https://events.moodle.com/course/view.php?id=40";
-            } else if ($highlightrecord->room == 'Technology') {
-                $sessionurl = "https://events.moodle.com/course/view.php?id=41";
-            } else if ($highlightrecord->room == 'Quiet') {
-                $sessionurl = "https://events.moodle.com/course/view.php?id=50";
-            } else if ($highlightrecord->room == 'Language') {
-                $sessionurl = "https://events.moodle.com/course/view.php?id=53";
-            }
-            $data['highlightrecords'][$highlightrecord->id]->sessionurl = $sessionurl;
-        }*/
 
         if (is_siteadmin()) {
             $siteadmin = true;
@@ -135,25 +89,18 @@ class block_mootprogram extends block_base {
                 }
             }
 
-            if ($happeningnowrecord->room == 'Education') {
-                $courseid = 40;
-            } else if ($happeningnowrecord->room == 'Technology') {
-                $courseid = 41;
-            } else if ($happeningnowrecord->room == 'Quiet') {
-                $courseid = 50;
-            } else if ($happeningnowrecord->room == 'Chinese') {
-                $courseid = 49;
-            } else if ($happeningnowrecord->room == 'Spanish') {
-                $courseid = 51;
-            } else if ($happeningnowrecord->room == 'German') {
-                $courseid = 52;
-            }  else if ($happeningnowrecord->room == 'French') {
-                $courseid = 53;
+            $courseid = course_id_mapper($happeningnowrecord);
+
+            try {
+                $roomname = get_course($courseid)->fullname;
+            } catch (dml_exception $e) {
+                $roomname = get_string('session', 'block_mootprogram');
             }
 
             $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
             $data['happeningnowrecords'][$happeningnowrecord->id]->presenterlist = $presenterlist;
             $data['happeningnowrecords'][$happeningnowrecord->id]->sessionurl = $sessionurl;
+            $data['happeningnowrecords'][$happeningnowrecord->id]->roomName = $roomname;
         }
 
         $upcomingrecords = $DB->get_records_select('block_mootprogram', 'timestart > ?', [time() + (HOURSECS / 2)], 'timestart', '*',0, 8);
@@ -209,28 +156,19 @@ class block_mootprogram extends block_base {
                 }
             }
 
-            if ($upcomingrecord->room == 'Education') {
-                $courseid = 40;
-            } else if ($upcomingrecord->room == 'Technology') {
-                $courseid = 41;
-            } else if ($upcomingrecord->room == 'Quiet') {
-                $courseid = 50;
-            } else if ($upcomingrecord->room == 'Chinese') {
-                $courseid = 49;
-            } else if ($upcomingrecord->room == 'Spanish') {
-                $courseid = 51;
-            } else if ($upcomingrecord->room == 'German') {
-                $courseid = 52;
-            }  else if ($upcomingrecord->room == 'French') {
-                $courseid = 53;
+            $courseid = course_id_mapper($upcomingrecord);
+
+            try {
+                $roomname = get_course($courseid)->fullname;
+            } catch (dml_exception $e) {
+                $roomname = get_string('session', 'block_mootprogram');
             }
 
             $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
             $data['upcomingrecords'][$upcomingrecord->id]->presenterlist = $presenterlist;
             $data['upcomingrecords'][$upcomingrecord->id]->sessionurl = $sessionurl;
+            $data['upcomingrecords'][$upcomingrecord->id]->roomName = $roomname;
         }
-
-        //die(print_object(array_values($data['upcomingrecords'])));
 
         $this->content->text =  $OUTPUT->render_from_template('block_mootprogram/programblock', [
             'happeningnowrecord' => array_values($data['happeningnowrecords']),
@@ -240,7 +178,6 @@ class block_mootprogram extends block_base {
             'issiteadmin' => is_siteadmin()
         ]);
 
-        //$this->content->text = "testing block";
         return $this->content;
     }
 }

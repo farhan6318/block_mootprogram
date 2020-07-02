@@ -1,18 +1,17 @@
 <?php
 
 require('../../config.php');
+require_once($CFG->dirroot . '/blocks/mootprogram/lib.php');
 
 $context = context_system::instance();
 $PAGE->set_context($context);
 $url = new moodle_url('/blocks/mootprogram/schedule.php');
 $PAGE->set_url($url);
-$title = 'Program Schedule';
+$title = get_string('programschedule', 'block_mootprogram');
 $PAGE->set_heading($title);
 $PAGE->set_title($title);
 
 echo $OUTPUT->header();
-//echo $OUTPUT->heading('Program Schedule');
-//$DB->set_debug(true);
 $dates = $DB->get_records_sql("SELECT DISTINCT TO_CHAR(to_timestamp(timestart), 'DDMMYYYY') as timestamps, TO_CHAR(to_timestamp(timestart), 'Day') as days from {block_mootprogram}
 ORDER BY timestamps");
 if (is_siteadmin()) {
@@ -22,7 +21,6 @@ if (is_siteadmin()) {
 }
 $rows = [];
 foreach ($dates as $date) {
-   // $DB->set_debug(true);
     $sql = "SELECT p.*, ".$DB->sql_fullname()." as presentername
              FROM {block_mootprogram} p
          LEFT JOIN {user} u ON u.id = p.userid
@@ -49,6 +47,7 @@ foreach ($dates as $date) {
                 )->out();
             }
         }
+
         if ($presentation->speakerlist) {
             $presenterlist = [];
             $speakers = explode(',', $presentation->speakerlist);
@@ -63,6 +62,15 @@ foreach ($dates as $date) {
             $presenterlist = rtrim(implode(",", $presenterlist), ",");
         }
         $presentation->presenterlist = $presenterlist;
+
+        $courseid = course_id_mapper($presentation);
+
+        try {
+            $roomname = get_course($courseid)->fullname;
+        } catch (dml_exception $e) {
+            $roomname = get_string('session', 'block_mootprogram');
+        }
+
         if ($presentation->userid) {
 
             $user = $DB->get_record('user', ['id' => $presentation->userid]);
@@ -101,11 +109,11 @@ foreach ($dates as $date) {
     $rows[] = [
         'timestart' => trim($date->days),
         'presentation' => $presentationsdata,
-        'active' => $active
+        'active' => $active,
+        'roomName' => $roomname,
     ];
 
 }
-
 
 $data = [
     'schedule' => $rows
