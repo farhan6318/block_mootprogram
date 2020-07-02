@@ -38,14 +38,18 @@
 </ion-item-divider>
 <%#presentations%>
 <ion-card>
+    <core-format-text text="<%image%>">
+    </core-format-text>
     <ion-card-content>
-        <core-format-text text="<%image%>">
-        </core-format-text>
-        <h2><%title%></h2>
-        <h5><%presenter%></h5>
+        <h1>
+            <%title%>
+        </h1>
+        <h2>
+            <core-format-text text='<a href="https://events.moodle.com/user/profile.php?id=545"><%presenter%> </a>'></core-format-text>
+        </h2>
         <%description%>
         <br/>
-        <a ion-button block href='<%link%>' core-link>Go to session now</a>
+        <a ion-button block href='<%link%>' [capture]="true" core-link >View session</a>
     </ion-card-content>
 </ion-card>
 <%/presentations%>
