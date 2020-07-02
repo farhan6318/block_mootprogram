@@ -62,7 +62,7 @@ class block_mootprogram extends block_base {
             } else {
                 $data['happeningnowrecords'][$happeningnowrecord->id]->imageurl  = 'https://picsum.photos/20'.rand(0,9);
             }
-
+            $presenterlist = null;
             if ($happeningnowrecord->speakerlist) {
                 $presenterlist = [];
                 $speakers = explode(',', $happeningnowrecord->speakerlist);
@@ -101,7 +101,7 @@ class block_mootprogram extends block_base {
 
             $url = new moodle_url('/course/view.php', ['id' => $courseid]);
             $sessionurl = $url->out(false);
-            $eurl = new moodle_url('/blocks/mootprogram/editschedule.php', ['id' => $happeningnowrecord->id]);
+            $eurl = new moodle_url('/blocks/mootprogram/edit.php', ['id' => $happeningnowrecord->id]);
             $editurl = $eurl->out(false);
             $uurl = new moodle_url('/user/profile.php', ['id' => $happeningnowrecord->userid]);
             $userurl = $uurl->out(false);
@@ -137,6 +137,7 @@ class block_mootprogram extends block_base {
                 $data['upcomingrecords'][$upcomingrecord->id]->imageurl  = 'https://picsum.photos/20'.rand(0,9);
             }
 
+            $presenterlist = null;
             if ($upcomingrecord->speakerlist) {
                 $presenterlist = [];
                 $speakers = explode(',', $upcomingrecord->speakerlist);
@@ -161,7 +162,7 @@ class block_mootprogram extends block_base {
                     $userpictureurl = $userpic->get_url($PAGE)->out();
                     $data['upcomingrecords'][$upcomingrecord->id]->presentername = $user->firstname . ' ' . $user->lastname;
                     $data['upcomingrecords'][$upcomingrecord->id]->userpicture = $userpicture;
-                    $data['upcomingrecords'][$upcomingrecord->id]->$userpictureurl = $userpictureurl;
+                    $data['upcomingrecords'][$upcomingrecord->id]->userpictureurl = $userpictureurl;
                     $data['upcomingrecords'][$upcomingrecord->id]->profiledescription = $user->description;
                 }
             }
@@ -176,7 +177,7 @@ class block_mootprogram extends block_base {
 
             $url = new moodle_url('/course/view.php', ['id' => $courseid]);
             $sessionurl = $url->out(false);
-            $eurl = new moodle_url('/blocks/mootprogram/editschedule.php', ['id' => $upcomingrecord->id]);
+            $eurl = new moodle_url('/blocks/mootprogram/edit.php', ['id' => $upcomingrecord->id]);
             $editurl = $eurl->out(false);
             $uurl = new moodle_url('/user/profile.php', ['id' => $upcomingrecord->userid]);
             $userurl = $uurl->out(false);

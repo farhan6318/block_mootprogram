@@ -84,7 +84,8 @@ class mobile {
 
             $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
 
-            //$imageurl = 'https://picsum.photos/202';
+            $presenter = '<a href="https://events.moodle.com/user/profile.php?id=545"><%presenter%> </a>';
+
             $happeningnowrecorddata[] = [
                 'title' => $happeningnowrecord->title,
                 'description' => (strlen($happeningnowrecord->description) > 100) ? $happeningnowrecord->description : substr($happeningnowrecord->description, 0, 100)."...",

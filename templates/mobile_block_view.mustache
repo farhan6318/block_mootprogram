@@ -45,9 +45,9 @@
             <%title%>
         </h1>
         <h2>
-            <core-format-text text='<a href="https://events.moodle.com/user/profile.php?id=545"><%presenter%> </a>'></core-format-text>
+            <core-format-text text='<%presenter%>'></core-format-text>
         </h2>
-        <%description%>
+        <p><%description%></p>
         <br/>
         <a ion-button block href='<%link%>' [capture]="true" core-link >View session</a>
     </ion-card-content>

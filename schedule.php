@@ -47,7 +47,7 @@ foreach ($dates as $date) {
                 )->out();
             }
         }
-
+        $presenterlist = null;
         if ($presentation->speakerlist) {
             $presenterlist = [];
             $speakers = explode(',', $presentation->speakerlist);
@@ -105,7 +105,7 @@ foreach ($dates as $date) {
 
         $url = new moodle_url('/course/view.php', ['id' => $courseid]);
         $presentation->sessionurl = $url->out(false);
-        $eurl = new moodle_url('/blocks/mootprogram/editschedule.php', ['id' => $presentation->id]);
+        $eurl = new moodle_url('/blocks/mootprogram/edit.php', ['id' => $presentation->id]);
         $presentation->editUrl = $eurl->out(false);
         $uurl = new moodle_url('/user/profile.php', ['id' => $presentation->userid]);
         $presentation->userLink = $uurl->out(false);
