@@ -33,6 +33,82 @@ require_once($CFG->dirroot . '/blocks/mootprogram/lib.php');
  */
 class mobile {
 
+    public static function mobile_schedule_view(array $args) : array {
+        global $OUTPUT, $DB;
+        $happeningnowrecorddata = [];
+
+        $happeningnowrecords = $DB->get_records_select('block_mootprogram', '', [], 'timestart', '*');
+        foreach ($happeningnowrecords as $happeningnowrecord) {
+
+            if ($imageid = $happeningnowrecord->image) {
+                $fs = new \file_storage();
+                $file = $fs->get_file_by_id($imageid);
+                if ($file) {
+                    $imageurl = \moodle_url::make_pluginfile_url(
+                        $file->get_contextid(),
+                        $file->get_component(),
+                        $file->get_filearea(),
+                        $file->get_itemid(),
+                        $file->get_filepath(),
+                        $file->get_filename()
+                    )->out();
+                } else {
+                    $imageurl  = 'https://picsum.photos/20'.rand(0,9);
+                }
+
+            } else {
+                $imageurl  = 'https://picsum.photos/20'.rand(0,9);
+            }
+
+            $courseid = course_id_mapper($happeningnowrecord);
+
+            $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
+
+            $presenterlist = get_presenter_list($happeningnowrecord);
+            if ($presenterlist) {
+                $presenter = $presenterlist;
+            } else {
+                $presenter = \html_writer::link(new \moodle_url('/user/profile.php', ['id' => $happeningnowrecord->userid]),
+                    $DB->get_field('user', $DB->sql_fullname(), ['id' => $happeningnowrecord->userid]));
+            }
+
+            try {
+                $roomname = get_course($courseid)->fullname;
+            } catch (dml_exception $e) {
+                $roomname = get_string('session', 'block_mootprogram');
+            }
+
+
+            $happeningnowrecorddata[] = [
+                'title' => $happeningnowrecord->title,
+                'description' => (strlen($happeningnowrecord->description) > 100) ? $happeningnowrecord->description : substr($happeningnowrecord->description, 0, 100)."...",
+                'presenter' => $presenter,
+                'link' => $sessionurl,
+                'institute' => $happeningnowrecord->institute,
+                'discussionlink' => $happeningnowrecord->discussionlink,
+                'roomname' => $roomname,
+                'timestart' => $happeningnowrecord->timestart,
+                'timeend' => trim($happeningnowrecord->timestart + ($happeningnowrecord->length * 60)),
+                'image' => '<img src="'.$imageurl.  '" width="100%" height="150px"/>'
+            ];
+        }
+
+        $data = [
+            'presentations' => $happeningnowrecorddata
+        ];
+        return [
+            'templates' => [
+                [
+                    'id' => 'mootprogram',
+                    'html' => $OUTPUT->render_from_template('block_mootprogram/mobile_schedule_view', $data),
+                ],
+            ],
+            'javascript' => '',
+            'otherdata' => [],
+            'files' => []
+        ];
+    }
+
     /**
      * Returns the SC document view page for the mobile app.
      *
@@ -94,7 +170,9 @@ class mobile {
                 'institute' => $happeningnowrecord->institute,
                 'discussionlink' => $happeningnowrecord->discussionlink,
                 'roomname' => $roomname,
-                'image' => '<img src="'.$imageurl.  '" width="100%" height="150px"/>',
+                'timestart' => $happeningnowrecord->timestart,
+                'timeend' => trim($happeningnowrecord->timestart + ($happeningnowrecord->length * 60)),
+                'image' => '<img src="'.$imageurl.  '" width="100%" height="150px"/>'
             ];
         }
 

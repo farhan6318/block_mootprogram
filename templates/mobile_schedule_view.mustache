@@ -33,16 +33,13 @@
     }
 }}
 {{=<% %>=}}
-<ion-item-divider>
-    <h2>Program Schedule</h2>
-</ion-item-divider>
 <%#presentations%>
 <ion-card>
     <core-format-text text="<%image%>">
     </core-format-text>
     <ion-card-content>
         <small><%#userdate%> <%timestart%>, <%#str%> timea, block_mootprogram <%/str%> <%/userdate%> -
-    <%#userdate%> <%timeend%>,  <%#str%> timeb, block_mootprogram <%/str%>  <%/userdate%></small>
+            <%#userdate%> <%timeend%>,  <%#str%> timeb, block_mootprogram <%/str%>  <%/userdate%></small>
         <h1>
             <%title%>
         </h1>
@@ -58,6 +55,3 @@
     </ion-card-content>
 </ion-card>
 <%/presentations%>
-<button ion-button block core-site-plugins-new-content title="Schedule" component="block_mootprogram" method="mobile_schedule_view">
-    View schedule
-</button>

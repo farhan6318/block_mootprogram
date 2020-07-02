@@ -30,6 +30,7 @@ use block_mootprogram\form\edit_form;
 require('../../config.php');
 require_once($CFG->libdir . '/formslib.php');
 require_once($CFG->dirroot.'/calendar/lib.php');
+require_once($CFG->dirroot . '/blocks/mootprogram/lib.php');
 $id = optional_param('id', 0, PARAM_INT);
 require_login();
 $context = context_system::instance();
@@ -51,21 +52,8 @@ if ($fromform = $mform->get_data()) {
     if (!isset($fromform->length))  {
         $fromform->length = 60;
     }
-    if ($fromform->room == 'Education') {
-        $courseid = 40;
-    } else if ($fromform->room == 'Technology') {
-        $courseid = 41;
-    } else if ($fromform->room == 'Quiet') {
-        $courseid = 50;
-    } else if ($fromform->room == 'Chinese') {
-        $courseid = 49;
-    } else if ($fromform->room == 'Spanish') {
-        $courseid = 51;
-    } else if ($fromform->room == 'German') {
-        $courseid = 52;
-    }  else if ($fromform->room == 'French') {
-        $courseid = 53;
-    }
+    $courseid = course_id_mapper($fromform);
+
     if ($fromform->id) {
         $recordid = $fromform->id;
         $DB->update_record('block_mootprogram', $fromform);

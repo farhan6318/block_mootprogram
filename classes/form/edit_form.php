@@ -25,7 +25,7 @@ class edit_form extends moodleform {
         $mform->addElement('static', 'speakerholder', '');
 
         $mform->addElement('select', 'room', 'Room', ['Education' => 'Education', 'Technology' => 'Technology', 'Quiet' => 'Quiet',
-        'Chinese' => 'Chinese', 'Spanish' => 'Spanish', 'German' => 'German', 'French' => 'French']);
+        'Chinese' => 'Chinese', 'Spanish' => 'Spanish', 'German' => 'German', 'French' => 'French', 'Networking Cafe' => 'Networking Cafe', 'Sponsor Solutions' => 'Sponsor Solutions']);
         $mform->setType('room', PARAM_TEXT);
 
         $mform->addElement('date_time_selector', 'timestart', 'Time start');
