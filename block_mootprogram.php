@@ -30,54 +30,6 @@ class block_mootprogram extends block_base {
         $this->content = new stdClass;
 
         $data = [];
-        /*$highlightrecords = $DB->get_records_select('block_mootprogram', 'timestart > ? AND hightlight = 1', [time() - HOURSECS], 'timestart', '*',0, 3);
-        foreach ($highlightrecords as $highlightrecord) {
-            $data['highlightrecords'][$highlightrecord->id] = ($highlightrecord);
-            if ($imageid = $highlightrecord->image) {
-                $fs = new \file_storage();
-                $file = $fs->get_file_by_id($imageid);
-                if ($file) {
-                    $data['highlightrecords'][$highlightrecord->id]->imageurl = \moodle_url::make_pluginfile_url(
-                        $file->get_contextid(),
-                        $file->get_component(),
-                        $file->get_filearea(),
-                        $file->get_itemid(),
-                        $file->get_filepath(),
-                        $file->get_filename()
-                    )->out();
-                }
-            }
-            if ($highlightrecord->userid) {
-                $user = $DB->get_record('user', ['id' => $highlightrecord->userid]);
-                // User image.
-                $userpicture = '';
-                if ($user) {
-                    $userpic = new \user_picture($user);
-                    // If the user has uploaded a profile picture, use it.
-                    if (!empty($userpic->user->picture)) {
-                        $userpic->link = false;
-                        $userpic->alttext = false;
-                        $userpic->size = 128;
-                        $userpic->visibletoscreenreaders = false;
-                        $userpic->class = "mr-5";
-                        $userpicture = $OUTPUT->render($userpic);
-                    }
-                    $data['highlightrecords'][$highlightrecord->id]->presentername = $user->firstname . ' ' . $user->lastname;
-                    $data['highlightrecords'][$highlightrecord->id]->userpicture = $userpicture;
-                    $data['highlightrecords'][$highlightrecord->id]->profiledescription = $user->description;
-                }
-            }
-            if ($highlightrecord->room == 'Learning') {
-                $sessionurl = "https://events.moodle.com/course/view.php?id=40";
-            } else if ($highlightrecord->room == 'Technology') {
-                $sessionurl = "https://events.moodle.com/course/view.php?id=41";
-            } else if ($highlightrecord->room == 'Quiet') {
-                $sessionurl = "https://events.moodle.com/course/view.php?id=50";
-            } else if ($highlightrecord->room == 'Language') {
-                $sessionurl = "https://events.moodle.com/course/view.php?id=53";
-            }
-            $data['highlightrecords'][$highlightrecord->id]->sessionurl = $sessionurl;
-        }*/
 
         if (is_siteadmin()) {
             $siteadmin = true;
@@ -218,8 +170,6 @@ class block_mootprogram extends block_base {
             $data['upcomingrecords'][$upcomingrecord->id]->roomName = $roomname;
         }
 
-        //die(print_object(array_values($data['upcomingrecords'])));
-
         $this->content->text =  $OUTPUT->render_from_template('block_mootprogram/programblock', [
             'happeningnowrecord' => array_values($data['happeningnowrecords']),
             'upcomingrecord' => array_values($data['upcomingrecords']),
@@ -228,7 +178,6 @@ class block_mootprogram extends block_base {
             'issiteadmin' => is_siteadmin()
         ]);
 
-        //$this->content->text = "testing block";
         return $this->content;
     }
 }

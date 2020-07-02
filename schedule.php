@@ -7,13 +7,11 @@ $context = context_system::instance();
 $PAGE->set_context($context);
 $url = new moodle_url('/blocks/mootprogram/schedule.php');
 $PAGE->set_url($url);
-$title = 'Program Schedule';
+$title = get_string('programschedule', 'block_mootprogram');
 $PAGE->set_heading($title);
 $PAGE->set_title($title);
 
 echo $OUTPUT->header();
-//echo $OUTPUT->heading('Program Schedule');
-//$DB->set_debug(true);
 $dates = $DB->get_records_sql("SELECT DISTINCT TO_CHAR(to_timestamp(timestart), 'DDMMYYYY') as timestamps, TO_CHAR(to_timestamp(timestart), 'Day') as days from {block_mootprogram}
 ORDER BY timestamps");
 if (is_siteadmin()) {
@@ -23,7 +21,6 @@ if (is_siteadmin()) {
 }
 $rows = [];
 foreach ($dates as $date) {
-   // $DB->set_debug(true);
     $sql = "SELECT p.*, ".$DB->sql_fullname()." as presentername
              FROM {block_mootprogram} p
          LEFT JOIN {user} u ON u.id = p.userid
@@ -117,7 +114,6 @@ foreach ($dates as $date) {
     ];
 
 }
-
 
 $data = [
     'schedule' => $rows
