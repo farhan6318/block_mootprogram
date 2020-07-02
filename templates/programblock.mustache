@@ -1,0 +1,94 @@
+<div class="p-4">
+    <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="col">
+                <h3> Right now </h3>
+            </div>
+        </div>
+        <div class="row">
+            {{#happeningnowrecord}}
+                <div class="col-md-3  col-sm-6 d-flex">
+                    <div class="card mb-2 profile-card-2">
+                        <img class="card-img-top" src="{{imageurl}}" alt="Card image cap" height="150px">
+
+                        <div class="card-body">
+                            <a href="{{sessionurl}}" class="a-color">{{#userdate}} {{timestart}}, {{#str}} strftimerecent {{/str}} {{/userdate}}</a>
+                            <h5 class="card-title">{{title}}</h5>
+                            <h6 class="card-subtitle">
+                                {{#userid}}
+                                    <a href="https://events.moodle.com/user/profile.php?id={{userid}}">
+                                {{/userid}}
+                                {{presentername}}
+                                {{#userid}}
+                                    </a>
+                                {{/userid}}
+                            </h6>
+                            <p class="card-text mt-3">{{description}}<br></p>
+                            <a href="{{sessionurl}}" class="btn btn-secondary" >Session</a><br/>
+                            <a href="{{discussionlink}}" class="btn btn-secondary mt-2" >Discussion</a>
+                            <br/>
+                            {{#issiteadmin}}
+                                <a href="https://events.moodle.com/blocks/mootprogram/edit.php?id={{id}}">Edit session</a>
+                            {{/issiteadmin}}
+                        </div>
+                    </div>
+                </div>
+            {{/happeningnowrecord}}
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="card">
+
+                    <div class="card-body">
+                        <img class="card-img-top" src="https://events.moodle.com/local/moodlemoot/pix/spons1.jpg" alt="Card image cap" height="150px">
+                        <h5 class="card-title"> Sponsor solutions </h5>
+                        <p class="card-text mt-3">{{{sponsordesc}}}<br></p>
+                        <a class="btn btn-primary" href="https://events.moodle.com/course/view.php?id=43">Visit Sponsors</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6"><div class="card">
+                <div class="card-body">
+                    <img class="card-img-top" src="https://events.moodle.com/local/moodlemoot/pix/cafe1.jpg" alt="Card image cap" height="150px">
+                    <h5> Networking cafe </h5>
+                    <p class="card-text mt-3">{{{networkingdesc}}}<br></p>
+                    <a class="btn btn-primary" href="https://events.moodle.com/course/view.php?id=42">Join Networking</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid mt-5">
+
+        <div class="row mb-3">
+            <div class="col">
+                <h2> Upcoming sessions </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            {{#upcomingrecord}}
+            <div class="col-md-3  col-sm-6  d-flex">
+                <div class="card mb-2 profile-card-2">
+                    <img class="card-img-top" src="{{imageurl}}" alt="Card image cap" height="135px">
+                    <div class="card-body">
+                        <a href="{{sessionurl}}" class="a-color">{{#userdate}} {{timestart}}, {{#str}} strftimerecent {{/str}} {{/userdate}}</a>
+                        <h6 class="card-title">{{title}}</h6>
+                        <p class="card-text">{{presentername}}</p>
+                        <a href="{{sessionurl}}" class="btn btn-light" >Session</a><br/>
+                        <a href="{{discussionlink}}" class="btn btn-light mt-2" >Discussion</a><br/>
+                        {{#issiteadmin}}
+                            <a href="https://events.moodle.com/blocks/mootprogram/edit.php?id={{id}}">Edit session</a>
+                        {{/issiteadmin}}
+                    </div>
+                </div>
+            </div>
+            {{/upcomingrecord}}
+        </div>
+
+
+    </div>
+
+</div>
