@@ -1,0 +1,12 @@
+.presentation-image {
+    height: 300px;
+    object-fit: contain;
+}
+
+/* Unused but left just incase */
+.clamp-6 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    overflow: hidden;
+}

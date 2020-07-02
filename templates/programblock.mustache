@@ -1,8 +1,8 @@
 <h2> {{#str}} rightnow, block_mootprogram {{/str}} </h2>
 <div class="container-fluid my-4">
-    <div class="row mb-3">
+    <div class="row mb-3 d-flex">
         {{#happeningnowrecord}}
-            <div class="col-md-3  col-sm-6 d-flex">
+            <div class="col-md-3 col-sm-6 d-flex">
                 {{> block_mootprogram/presentation }}
             </div>
         {{/happeningnowrecord}}
@@ -33,7 +33,7 @@
 
 <h2>{{#str}} upcomingsessions, block_mootprogram {{/str}}</h2>
 <div class="container-fluid mt-4">
-    <div class="row">
+    <div class="row d-flex">
         {{#upcomingrecord}}
             <div class="col-md-3 col-sm-6 d-flex">
                 {{> block_mootprogram/presentation }}
