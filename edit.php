@@ -145,6 +145,35 @@ if ($id) {
             $data->imageholder = '';
         }
 
+        $data->speakerholder = '';
+
+        if ($data->userid) {
+            $user = $DB->get_record('user', ['id' => $data->userid]);
+            $data->speakerholder .= "<a href='".$CFG->wwwroot."/user/profile.php?id=".$data->userid."'>".$user->firstname. " ".$user->lastname."</a>";
+            $userpicture = '';
+            if ($user) {
+                $userpic = new \user_picture($user);
+                $userpic->size = true;
+                $data->speakerholder .= $OUTPUT->render($userpic, $PAGE);
+            }
+
+            $data->speakerholder .= '';
+        }
+
+        if ($happeningnowrecord->speakerlist) {
+            $presenterlist = [];
+            $speakers = explode(',', $happeningnowrecord->speakerlist);
+            foreach ($speakers as $speaker) {
+                $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => $speaker]);
+                if ($speakeruserid) {
+                    $presenterlist[] = "<a href='".$CFG->wwwroot."/user/profile.php?id=".$speakeruserid."'>".$speaker."</a>";
+                } else {
+                    $presenterlist[] = $speaker;
+                }
+            }
+            $data->speakerholder .= rtrim(implode(",", $presenterlist), ",");
+        }
+
 
         /*$data->description = [
             'format' => 1,

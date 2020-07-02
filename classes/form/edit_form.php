@@ -19,14 +19,16 @@ class edit_form extends moodleform {
 
         $mform->addElement('select', 'userid', 'User',  $DB->get_records_menu('user', ['deleted' => 0], $DB->sql_fullname(), 'id, '.$DB->sql_fullname()));
 
+        $mform->addElement('text', 'speakerlist', 'Speakerlist', ['size' => 50]);
+        $mform->setType('speakerlist', PARAM_TEXT);
+
+        $mform->addElement('static', 'speakerholder', '');
+
         $mform->addElement('select', 'room', 'Room', ['Education' => 'Education', 'Technology' => 'Technology', 'Quiet' => 'Quiet',
         'Chinese' => 'Chinese', 'Spanish' => 'Spanish', 'German' => 'German', 'French' => 'French']);
         $mform->setType('room', PARAM_TEXT);
 
         $mform->addElement('date_time_selector', 'timestart', 'Time start');
-
-        $mform->addElement('text', 'speakerlist', 'Speakerlist', ['size' => 50]);
-        $mform->setType('speakerlist', PARAM_TEXT);
 
         $mform->addElement('text', 'length', 'Length');
         $mform->setType('length', PARAM_INT);
