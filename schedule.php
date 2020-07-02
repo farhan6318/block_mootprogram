@@ -52,14 +52,14 @@ foreach ($dates as $date) {
             $presenterlist = [];
             $speakers = explode(',', $presentation->speakerlist);
             foreach ($speakers as $speaker) {
-                $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => $speaker]);
+                $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => trim($speaker)]);
                 if ($speakeruserid) {
                     $presenterlist[] = "<a href='".$CFG->wwwroot."/user/profile.php?id=".$speakeruserid."'>".$speaker."</a>";
                 } else {
                     $presenterlist[] = $speaker;
                 }
             }
-            $presenterlist = rtrim(implode(",", $presenterlist), ",");
+            $presenterlist = rtrim(implode(",", $presenterlist), ", ");
         }
         $presentation->presenterlist = $presenterlist;
 
