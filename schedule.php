@@ -49,6 +49,20 @@ foreach ($dates as $date) {
                 )->out();
             }
         }
+        if ($presentation->speakerlist) {
+            $presenterlist = [];
+            $speakers = explode(',', $presentation->speakerlist);
+            foreach ($speakers as $speaker) {
+                $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => $speaker]);
+                if ($speakeruserid) {
+                    $presenterlist[] = "<a href='".$CFG->wwwroot."/user/profile.php?id=".$speakeruserid."'>".$speaker."</a>";
+                } else {
+                    $presenterlist[] = $speaker;
+                }
+            }
+            $presenterlist = rtrim(implode(",", $presenterlist), ",");
+        }
+        $presentation->presenterlist = $presenterlist;
         if ($presentation->userid) {
 
             $user = $DB->get_record('user', ['id' => $presentation->userid]);
@@ -96,7 +110,7 @@ foreach ($dates as $date) {
 $data = [
     'schedule' => $rows
 ];
-//die(print_object($data));
+
 echo $OUTPUT->render_from_template('block_mootprogram/schedule', $data);
 
 echo $OUTPUT->footer();

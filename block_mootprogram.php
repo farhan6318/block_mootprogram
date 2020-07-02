@@ -24,7 +24,7 @@ class block_mootprogram extends block_base {
     }
 
     function get_content() {
-        global $OUTPUT, $DB, $PAGE;
+        global $OUTPUT, $DB, $PAGE, $CFG;
         $this->content = new stdClass;
 
         $data = [];
@@ -106,6 +106,20 @@ class block_mootprogram extends block_base {
             } else {
                 $data['happeningnowrecords'][$happeningnowrecord->id]->imageurl  = 'https://picsum.photos/20'.rand(0,9);
             }
+
+            if ($happeningnowrecord->speakerlist) {
+                $presenterlist = [];
+                $speakers = explode(',', $happeningnowrecord->speakerlist);
+                foreach ($speakers as $speaker) {
+                    $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => $speaker]);
+                    if ($speakeruserid) {
+                        $presenterlist[] = "<a href='".$CFG->wwwroot."/user/profile.php?id=".$speakeruserid."'>".$speaker."</a>";
+                    } else {
+                        $presenterlist[] = $speaker;
+                    }
+                }
+                $presenterlist = rtrim(implode(",", $presenterlist), ",");
+            }
             if ($happeningnowrecord->userid) {
 
                 $user = $DB->get_record('user', ['id' => $happeningnowrecord->userid]);
@@ -138,7 +152,7 @@ class block_mootprogram extends block_base {
             }
 
             $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
-
+            $data['happeningnowrecords'][$happeningnowrecord->id]->presenterlist = $presenterlist;
             $data['happeningnowrecords'][$happeningnowrecord->id]->sessionurl = $sessionurl;
         }
 
@@ -165,6 +179,21 @@ class block_mootprogram extends block_base {
             } else {
                 $data['upcomingrecords'][$upcomingrecord->id]->imageurl  = 'https://picsum.photos/20'.rand(0,9);
             }
+
+            if ($upcomingrecord->speakerlist) {
+                $presenterlist = [];
+                $speakers = explode(',', $upcomingrecord->speakerlist);
+                foreach ($speakers as $speaker) {
+                    $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => $speaker]);
+                    if ($speakeruserid) {
+                        $presenterlist[] = "<a href='".$CFG->wwwroot."/user/profile.php?id=".$speakeruserid."'>".$speaker."</a>";
+                    } else {
+                        $presenterlist[] = $speaker;
+                    }
+                }
+                $presenterlist = rtrim(implode(",", $presenterlist),",");
+            }
+
             if ($upcomingrecord->userid) {
 
                 $user = $DB->get_record('user', ['id' => $upcomingrecord->userid]);
@@ -197,7 +226,7 @@ class block_mootprogram extends block_base {
             }
 
             $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
-
+            $data['upcomingrecords'][$upcomingrecord->id]->presenterlist = $presenterlist;
             $data['upcomingrecords'][$upcomingrecord->id]->sessionurl = $sessionurl;
         }
 
