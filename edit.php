@@ -78,15 +78,15 @@ if ($fromform = $mform->get_data()) {
     $event = new stdClass();
 
     if ($eventid) {
-        $eventforupdate = calendar_event::load($eventid);
+        $eventforupdate = calendar_event::load($eventid->id);
     }
 
-    $stream = "<a href='".$CFG->wwwroot."/course/view.php?id=".$courseid."'>".$fromform->room."</a>";
-    $discussionlink = "<a href='".$fromform->discussionlink."'> Discussion link </a>";
+    $stream = "<a href='".$CFG->wwwroot."/course/view.php?id=".$courseid."'>".$fromform->room." Room</a>";
+    $discussionlink = "<a href='".$fromform->discussionlink."'> Discuss here </a>";
     $event->eventtype = 'course'; // Constant defined somewhere in your code - this can be any string value you want. It is a way to identify the event.
     $event->type = CALENDAR_EVENT_TYPE_STANDARD; // This is used for events we only want to display on the calendar, and are not needed on the block_myoverview.
     $event->name = $fromform->title;
-    $event->description = $fromform->description."<br/><br/> Stream: ".$stream. "Discuss here: ". $discussionlink;
+    $event->description = $fromform->description."<br/><br/> Stream: ".$stream. "<br/><br/>Discuss here: ". $discussionlink;
     $event->format = FORMAT_HTML;
     $event->courseid = $courseid;
     $event->uuid = 'mootprogram';
@@ -99,9 +99,12 @@ if ($fromform = $mform->get_data()) {
 
     if ($eventid) {
 
-        $event->id = $eventid;
-        $eventobj = new calendar_event($event);
-        $eventobj->update((object) $event, false);
+        $event->id = $eventid->id;
+        $event->desription = [
+            'format' => FORMAT_HTML,
+            'text' => $event->description
+        ];
+        $eventforupdate->update($event, false);
     } else {
         calendar_event::create($event);
     }
