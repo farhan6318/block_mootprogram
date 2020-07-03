@@ -3,7 +3,7 @@
 @import "../../../theme/boost/scss/bootstrap/_mixins";
 .presentation-image {
     height: 300px;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .four,
