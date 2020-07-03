@@ -189,7 +189,9 @@ class block_mootprogram extends block_base {
 
         $this->content->text =  $OUTPUT->render_from_template('block_mootprogram/programblock', [
             'happeningnowrecord' => !empty($data['happeningnowrecords']) ? array_values($data['happeningnowrecords']) : [],
-            'upcomingrecord' => array_values($data['upcomingrecords']),
+            'upcomingrecord' => !empty($data['upcomingrecords']) ? array_values($data['upcomingrecords']) : [],
+            'multiplehappeningnow' => !empty($data['happeningnowrecords']) && count($data['happeningnowrecords']) > 1 ? true : false,
+            'multipleupcoming' => !empty($data['upcomingrecords']) && count($data['upcomingrecords']) > 1 ? true : false,
             'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 43]),
             'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 42]),
             'issiteadmin' => is_siteadmin(),

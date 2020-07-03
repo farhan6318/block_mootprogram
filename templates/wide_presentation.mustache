@@ -14,11 +14,13 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
-<div class="card">
-    <a href="{{sessionurl}}">
-        <img class="card-img-top presentation-image mb-3" src="{{imageurl}}" alt="{{imageAlt}}" aria-hidden="true">
-    </a>
-    <div class="card-body d-flex flex-column pt-0">
+<div class="row one p-3 m-1 mb-3">
+    <div class="col-xl-3 col-lg-4 col-md-6">
+        <a href="{{sessionurl}}">
+            <img class="card-img-top presentation-image" src="{{imageurl}}" alt="{{imageAlt}}" aria-hidden="true">
+        </a>
+    </div>
+    <div class="col-xl-9 col-lg-8 col-md-6">
         <small class="text-danger font-weight-bold mb-2">{{#userdate}} {{timestart}}, {{#str}} timea, block_mootprogram {{/str}} {{/userdate}} - {{#userdate}} {{timeend}}, {{#str}} timeb, block_mootprogram {{/str}} {{/userdate}}</small>
         <h4 class="card-title ml-0 font-weight-bold mb-2">{{title}}</h4>
         {{#presenterlist}}
