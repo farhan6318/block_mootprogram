@@ -5,7 +5,7 @@
     {{#presentationsNow}}
         <div class="mb-3 d-flex flex-wrap">
             {{#happeningnowrecord}}
-                <div class="d-flex {{{presentationClasses}}} m-1">
+                <div class="d-flex {{{nowClasses}}} m-1">
                     {{> block_mootprogram/presentation }}
                 </div>
             {{/happeningnowrecord}}
@@ -39,7 +39,7 @@
 <div class="container-fluid mt-4">
     <div class="d-flex flex-wrap">
         {{#upcomingrecord}}
-            <div class="d-flex {{{presentationClasses}}} m-1">
+            <div class="d-flex {{{upcomingClasses}}} m-1">
                 {{> block_mootprogram/presentation }}
             </div>
         {{/upcomingrecord}}

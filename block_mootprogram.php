@@ -177,26 +177,8 @@ class block_mootprogram extends block_base {
         $url = new moodle_url('/blocks/mootprogram/schedule.php');
         $schedulelink = $url->out(false);
 
-        // TODO: Responsive elements.
-        // Get count of right now
-        // Then assign the classes for the cards
-        switch(count($data['happeningnowrecords'])) {
-            case 1:
-                $classes = 'one';
-                break;
-            case 2:
-                $classes = 'two';
-                break;
-            case 3:
-                $classes = 'three';
-                break;
-            default:
-                $classes = 'four';
-                break;
-        }
-        // Need to make scss file to parse and transpile to css
-        // Classes use flex basis of 24, 33, 50, 100 if 4, 3, 2, 1
-        // Classes defined in css with breakpoints going up.
+        $nowclasses = presentation_classes(!empty($data['happeningnowrecords']) ? count($data['happeningnowrecords']) : 0);
+        $upcomingclasses = presentation_classes(!empty($data['upcomingrecords'])? count($data['upcomingrecords']) : 0);
 
         $this->content->text =  $OUTPUT->render_from_template('block_mootprogram/programblock', [
             'happeningnowrecord' => !empty($data['happeningnowrecords']) ? array_values($data['happeningnowrecords']) : [],
@@ -208,7 +190,8 @@ class block_mootprogram extends block_base {
             'cafeImg' => course_summary_exporter::get_course_image(get_course(42)),
             'presentationsNow' => count($happeningnowrecords) > 0 ? true : false,
             'scheduleLink' => $schedulelink,
-            'presentationClasses' => $classes,
+            'nowClasses' => $nowclasses,
+            'upcomingClasses' => $upcomingclasses,
         ]);
 
         return $this->content;

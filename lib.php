@@ -42,6 +42,29 @@ function course_id_mapper(stdClass $presentation) {
     }
 }
 
+/**
+ * Simple handler to turn an variable int count to some basic class strings.
+ *
+ * @param int $count The number of presentations we are showing
+ * @return string Small class addition for us to target
+ */
+function presentation_classes(int $count) {
+    switch($count) {
+        case 1:
+            return 'one';
+            break;
+        case 2:
+            return 'two';
+            break;
+        case 3:
+            return 'three';
+            break;
+        default:
+            return 'four';
+            break;
+    }
+}
+
 function get_presenter_list(stdClass $presentation) {
     global $DB, $CFG;
     $presenterlist = [];
