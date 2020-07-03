@@ -177,7 +177,6 @@ class block_mootprogram extends block_base {
         $url = new moodle_url('/blocks/mootprogram/schedule.php');
         $schedulelink = $url->out(false);
 
-
         $nowclasses = presentation_classes(!empty($data['happeningnowrecords']) ? count($data['happeningnowrecords']) : 0);
         $upcomingclasses = presentation_classes(!empty($data['upcomingrecords'])? count($data['upcomingrecords']) : 0);
 
