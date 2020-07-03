@@ -70,7 +70,7 @@ if ($fromform = $mform->get_data()) {
     }
 
     $stream = "<a href='".$CFG->wwwroot."/course/view.php?id=".$courseid."'>".$fromform->room." Room</a>";
-    $discussionlink = "<a href='".$fromform->discussionlink."'> Discuss here </a>";
+    $discussionlink = ($fromform->discussionlink) ? "<a href='".$fromform->discussionlink."'> Discuss here </a>" : null;
     $event->eventtype = 'course'; // Constant defined somewhere in your code - this can be any string value you want. It is a way to identify the event.
     $event->type = CALENDAR_EVENT_TYPE_STANDARD; // This is used for events we only want to display on the calendar, and are not needed on the block_myoverview.
     $event->name = $fromform->title;
@@ -98,7 +98,10 @@ if ($fromform = $mform->get_data()) {
     $event->description .= 'Institute : '.$fromform->institute;
     $event->description .= '<br/><br/>';
     $event->description .=
-        $fromform->description."<br/><br/> Stream: ".$stream. "<br/><br/>Discuss here: ". $discussionlink;
+        $fromform->description."<br/><br/> Stream: ".$stream;
+    if ($discussionlink) {
+        $event->description .= "<br/><br/>Discuss here: ". $discussionlink;
+    }
     $event->format = FORMAT_HTML;
     $event->courseid = $courseid;
     $event->uuid = 'mootprogram';
