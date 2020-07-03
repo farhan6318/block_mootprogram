@@ -43,7 +43,8 @@ class block_mootprogram extends block_base {
             $siteadmin = null;
         }
 
-        $happeningnowrecords = $DB->get_records_select('block_mootprogram', 'timestart > ?', [time() - (HOURSECS / 2)], 'timestart', '*',0, 4);
+        $happeningnowrecords = $DB->get_records_select('block_mootprogram', 'timestart < ? AND timestart + (length * 60) > ? ',
+            [time(), time()], 'timestart', '*',0, 4);
         foreach ($happeningnowrecords as $happeningnowrecord) {
             $happeningnowrecord->issiteadmin = $siteadmin;
             $data['happeningnowrecords'][$happeningnowrecord->id] = ($happeningnowrecord);
