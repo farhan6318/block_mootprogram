@@ -1,6 +1,8 @@
+@import "../../../theme/boost/scss/bootstrap/_functions";
+@import "../../../theme/boost/scss/bootstrap/_variables";
+@import "../../../theme/boost/scss/bootstrap/_mixins";
 .presentation-image {
     height: 300px;
-    -o-object-fit: contain;
     object-fit: contain;
 }
 
@@ -8,30 +10,27 @@
 .three,
 .two,
 .one {
-    -ms-flex-preferred-size: calc(100% - 0.5rem);
+    // 4 items.
     flex-basis: calc(100% - 0.5rem);
 }
 
-@media (min-width: 576px) {
+@include media-breakpoint-up(sm) {
     .four,
-  .three,
-  .two {
-        -ms-flex-preferred-size: calc(50% - 0.5rem);
+    .three,
+    .two {
         flex-basis: calc(50% - 0.5rem);
     }
 }
 
-@media (min-width: 768px) {
+@include media-breakpoint-up(md) {
     .four,
-  .three {
-        -ms-flex-preferred-size: calc(33% - 0.5rem);
+    .three {
         flex-basis: calc(33% - 0.5rem);
     }
 }
 
-@media (min-width: 992px) {
+@include media-breakpoint-up(lg) {
     .four {
-        -ms-flex-preferred-size: calc(25% - 0.5rem);
         flex-basis: calc(25% - 0.5rem);
     }
 }
