@@ -15,21 +15,24 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 <div class="card">
-    <img class="card-img-top presentation-image" src="{{imageurl}}" alt="{{imageAlt}}" aria-hidden="true">
+    <img class="card-img-top presentation-image mb-2" src="{{imageurl}}" alt="{{imageAlt}}" aria-hidden="true">
     <div class="card-body pt-0">
-        <small class="text-danger">{{#userdate}} {{timestart}}, {{#str}} timea, block_mootprogram {{/str}} {{/userdate}} - {{#userdate}} {{timeend}}, {{#str}} timeb, block_mootprogram {{/str}} {{/userdate}}</small>
-        <h4 class="card-title ml-0 font-weight-bold">{{title}}</h4>
+        <small class="text-danger font-weight-bold mb-2">{{#userdate}} {{timestart}}, {{#str}} timea, block_mootprogram {{/str}} {{/userdate}} - {{#userdate}} {{timeend}}, {{#str}} timeb, block_mootprogram {{/str}} {{/userdate}}</small>
+        <h4 class="card-title ml-0 font-weight-bold mb-2">{{title}}</h4>
         {{#presenterlist}}
-            <h5 class="card-subtitle font-weight-bold">
+            <h5 class="card-subtitle font-weight-bold mb-2">
                 {{{.}}}
             </h5>
         {{/presenterlist}}
         {{^presenterlist}}
-            <h5 class="card-subtitle font-weight-bold">
+            <h5 class="card-subtitle font-weight-bold mb-2">
                 <a href="{{userLink}}">{{presentername}}</a>
             </h5>
         {{/presenterlist}}
-        <p class="card-text">{{description}}</p>
+        {{#institute}}
+            <h6 class="card-subtitle font-weight-bold mb-2">{{{.}}}</h6>
+        {{/institute}}
+        <p class="card-text mt-3">{{description}}</p>
         <a href="{{sessionurl}}" class="btn btn-secondary rounded" >{{roomName}}</a><br/>
         {{#discussionlink}}
             <a href="{{discussionlink}}" class="btn btn-secondary rounded mt-2" >{{#str}} discussion, block_mootprogram {{/str}}</a>

@@ -2,6 +2,7 @@
 
 require('../../config.php');
 require_once($CFG->dirroot . '/blocks/mootprogram/lib.php');
+$PAGE->requires->css($CFG->dirroot . '/blocks/mootprogram/styles.css');
 
 $context = context_system::instance();
 $PAGE->set_context($context);
@@ -28,7 +29,6 @@ foreach ($dates as $date) {
             ORDER BY timestart";
 
     $presentations = $DB->get_records_sql($sql, ['param' => $date->timestamps]);
-    //die(print_object($presentations));
     $presentationsdata = [];
     foreach ($presentations as $presentation) {
         $presentation->issiteadmin = $siteadmin;
