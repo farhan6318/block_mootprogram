@@ -20,3 +20,4 @@ $string['cafecardtext'] = 'Meet and greet moodlers from all walks of life.';
 $string['timea'] = '%d %B %I:%M %p';
 $string['timeb'] = '%I:%M %p';
 $string['seeprogram'] = 'See full program';
+$string['day'] = 'Day {$a}: ';

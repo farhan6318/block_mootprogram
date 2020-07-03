@@ -21,6 +21,7 @@ if (is_siteadmin()) {
     $siteadmin = null;
 }
 $rows = [];
+$day = 1;
 foreach ($dates as $date) {
     $sql = "SELECT p.*, ".$DB->sql_fullname()." as presentername
              FROM {block_mootprogram} p
@@ -101,12 +102,15 @@ foreach ($dates as $date) {
     $classes = presentation_classes(!empty($presentationsdata) ? count($presentationsdata) : 0);
 
     $rows[] = [
-        'timestart' => trim($date->days),
+        'timestart' => get_string('day', 'block_mootprogram', $day) . trim($date->days),
         'presentation' => $presentationsdata,
         'active' => $active,
         'classes' => $classes,
+        'day' => $day,
     ];
 
+    // Quick way to define what day of the Moot this relates to.
+    $day++;
 }
 
 $data = [
