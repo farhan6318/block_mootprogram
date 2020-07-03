@@ -21,7 +21,7 @@
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .four,
   .three {
         -ms-flex-preferred-size: calc(33% - 0.5rem);
@@ -29,7 +29,7 @@
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
     .four {
         -ms-flex-preferred-size: calc(25% - 0.5rem);
         flex-basis: calc(25% - 0.5rem);
