@@ -51,8 +51,6 @@ function course_id_mapper(stdClass $presentation) {
 function presentation_classes(int $count) {
     switch($count) {
         case 1:
-            return 'one';
-            break;
         case 2:
             return 'two';
             break;
