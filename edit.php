@@ -74,7 +74,31 @@ if ($fromform = $mform->get_data()) {
     $event->eventtype = 'course'; // Constant defined somewhere in your code - this can be any string value you want. It is a way to identify the event.
     $event->type = CALENDAR_EVENT_TYPE_STANDARD; // This is used for events we only want to display on the calendar, and are not needed on the block_myoverview.
     $event->name = $fromform->title;
-    $event->description = $fromform->description."<br/><br/> Stream: ".$stream. "<br/><br/>Discuss here: ". $discussionlink;
+
+    $event->description = 'Presenter : ';
+    if ($fromform->userid) {
+        $user = $DB->get_record('user', ['id' => $fromform->userid]);
+        $event->description .= "<a href='".$CFG->wwwroot."/user/profile.php?id=".$fromform->userid."'>".$user->firstname. " ".$user->lastname."</a>";
+    }
+    $event->description .= '<br/><br/>';
+    if ($fromform->speakerlist) {
+        $presenterlist = [];
+        $speakers = explode(',', $fromform->speakerlist);
+        foreach ($speakers as $speaker) {
+            $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => $speaker]);
+            if ($speakeruserid) {
+                $presenterlist[] = "<a href='".$CFG->wwwroot."/user/profile.php?id=".$speakeruserid."'>".$speaker."</a>";
+            } else {
+                $presenterlist[] = $speaker;
+            }
+        }
+        $event->description .= rtrim(implode(",", $presenterlist), ",");
+        $event->description .= '<br/><br/>';
+    }
+    $event->description .= 'Institute : '.$fromform->institute;
+    $event->description .= '<br/><br/>';
+    $event->description .=
+        $fromform->description."<br/><br/> Stream: ".$stream. "<br/><br/>Discuss here: ". $discussionlink;
     $event->format = FORMAT_HTML;
     $event->courseid = $courseid;
     $event->uuid = 'mootprogram';
@@ -148,9 +172,9 @@ if ($id) {
             $data->speakerholder .= '';
         }
 
-        if ($happeningnowrecord->speakerlist) {
+        if ($data->speakerlist) {
             $presenterlist = [];
-            $speakers = explode(',', $happeningnowrecord->speakerlist);
+            $speakers = explode(',', $data->speakerlist);
             foreach ($speakers as $speaker) {
                 $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => $speaker]);
                 if ($speakeruserid) {
