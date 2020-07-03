@@ -98,11 +98,13 @@ foreach ($dates as $date) {
     } else {
         $active = null;
     }
+    $classes = presentation_classes(!empty($presentationsdata) ? count($presentationsdata) : 0);
 
     $rows[] = [
         'timestart' => trim($date->days),
         'presentation' => $presentationsdata,
         'active' => $active,
+        'classes' => $classes,
     ];
 
 }

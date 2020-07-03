@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs mx-1">
     {{#schedule}}
         <li class="nav-item">
             <a class="nav-link {{active}}" data-toggle="tab" href="#{{timestart}}" {{active}}>{{timestart}}</a>
@@ -9,9 +9,9 @@
 <div class="tab-content" id="myTabContent">
     {{#schedule}}
         <div class="tab-pane {{active}}" id="{{timestart}}" >
-           <div class="row py-4 d-flex">
+           <div class="d-flex flex-wrap">
                 {{#presentation}}
-                    <div class="col-md-3 col-sm-6 d-flex mb-3">
+                    <div class="d-flex {{classes}} m-1">
                         {{> block_mootprogram/presentation }}
                     </div>
                 {{/presentation}}
