@@ -35,10 +35,12 @@ function course_id_mapper(stdClass $presentation) {
         return 52;
     }  else if ($presentation->room == 'French') {
         return 53;
-    } else if ($presentation->room = 'Networking Cafe') {
+    } else if ($presentation->room == 'Networking Cafe') {
         return 42;
-    } else if ($presentation->room = 'Sponsor Solutions') {
+    } else if ($presentation->room == 'Sponsor Solutions') {
         return 43;
+    } else if ($presentation->room == 'Treasure Hunt') {
+        return 77;
     }
 }
 
