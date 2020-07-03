@@ -106,6 +106,7 @@ foreach ($dates as $date) {
         'presentation' => $presentationsdata,
         'active' => $active,
         'classes' => $classes,
+        'day' => $day,
     ];
 
     // Quick way to define what day of the Moot this relates to.

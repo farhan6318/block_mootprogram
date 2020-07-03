@@ -1,14 +1,14 @@
 <ul class="nav nav-tabs mx-1">
     {{#schedule}}
         <li class="nav-item">
-            <a class="nav-link {{active}}" data-toggle="tab" href="#{{timestart}}" {{active}}>{{timestart}}</a>
+            <a class="nav-link {{active}}" data-toggle="tab" href="#tab-{{day}}" {{active}}>{{timestart}}</a>
         </li>
     {{/schedule}}
 </ul>
 
 <div class="tab-content" id="myTabContent">
     {{#schedule}}
-        <div class="tab-pane {{active}}" id="{{timestart}}" >
+        <div class="tab-pane {{active}}" id="tab-{{day}}" >
            <div class="d-flex flex-wrap">
                 {{#presentation}}
                     <div class="d-flex {{classes}} m-1">
