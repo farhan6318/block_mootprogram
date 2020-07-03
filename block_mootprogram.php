@@ -182,6 +182,11 @@ class block_mootprogram extends block_base {
         $nowclasses = presentation_classes(!empty($data['happeningnowrecords']) ? count($data['happeningnowrecords']) : 0);
         $upcomingclasses = presentation_classes(!empty($data['upcomingrecords'])? count($data['upcomingrecords']) : 0);
 
+        $surl = new moodle_url('/course/view.php', ['id' => 43]);
+        $sponserurl = $surl->out(false);
+        $curl = new moodle_url('/course/view.php', ['id' => 42]);
+        $cafeurl = $curl->out(false);
+
         $this->content->text =  $OUTPUT->render_from_template('block_mootprogram/programblock', [
             'happeningnowrecord' => !empty($data['happeningnowrecords']) ? array_values($data['happeningnowrecords']) : [],
             'upcomingrecord' => array_values($data['upcomingrecords']),
@@ -190,6 +195,8 @@ class block_mootprogram extends block_base {
             'issiteadmin' => is_siteadmin(),
             'sponserImg' => course_summary_exporter::get_course_image(get_course(43)),
             'cafeImg' => course_summary_exporter::get_course_image(get_course(42)),
+            'sponserLink' => $sponserurl,
+            'networkLink' => $cafeurl,
             'presentationsNow' => count($happeningnowrecords) > 0 ? true : false,
             'scheduleLink' => $schedulelink,
             'nowClasses' => $nowclasses,
