@@ -23,6 +23,7 @@
  */
 
 namespace block_mootprogram\output;
+use core_course\external\course_summary_exporter;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -212,14 +213,13 @@ ORDER BY timestamps");
             'sponsorurl' => (new \moodle_url('/course/view.php', ['id' => 43]))->out(false),
             'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 43]),
             'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 42]),
-            'sponsorimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(43)), 'sponsor'),
-            'networkingimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(42)), 'sponsor'),,
-
+            'sponsorimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(43)), 'sponsor', ['height' => '150px', 'width' => '100%']),
+            'networkingimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(42)), 'networking', ['height' => '150px', 'width' => '100%'])
         ];
         return [
             'templates' => [
                 [
-                    'id' => 'mootprogram',
+                    'id' => 'mootprogram1',
                     'html' => $OUTPUT->render_from_template('block_mootprogram/mobile_block_view', $data),
                 ],
             ],

@@ -62,27 +62,28 @@
         [args]="{first:true}">
     <h1>View Full Program Schedule</h1>
 </button>
-<div style="width: 45%;float:left">
-    <a href="<%networkingurl%>" [capture]="true" core-link>
-        <ion-card>
-        <core-format-text text="<%networkingimage%>">
+<ion-card>
+    <core-format-text text="<%networkingimage%>">
+
+    </core-format-text>
+    <h1>Networking Cafe</h1>
+    <p>
+        <core-format-text text="<%networkingdesc%>">
+
         </core-format-text>
-        <h1>Networking Cafe</h1>
-        <p>
-            <%networkingdesc%>
-        </p>
-    </ion-card>
-    </a>
-</div>
-<div style="width: 45%;float:right">
-    <a href="<%sponsorurl%>" [capture]="true" core-link>
-    <ion-card>
-        <core-format-text text="<%sponsorimage%>">
+
+    </p>
+    <a ion-button block href='<%networkingurl%>' [capture]="true" core-link >Join Networking</a>
+</ion-card>
+<ion-card>
+    <core-format-text text="<%sponsorimage%>">
+    </core-format-text>
+    <h1>Sponsor Solutions</h1>
+    <p>
+        <core-format-text text="<%sponsordesc%>">
+
         </core-format-text>
-        <h1>Sponsor Solutions</h1>
-        <p>
-            <%sponsordesc%>
-        </p>
-    </ion-card>
-    </a>
-</div>
+    </p>
+    <a ion-button block href='<%sponsorurl%>' [capture]="true" core-link >Visit Sponsors</a>
+
+</ion-card>
