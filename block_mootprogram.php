@@ -105,6 +105,7 @@ class block_mootprogram extends block_base {
             $data['happeningnowrecords'][$happeningnowrecord->id]->editUrl = $editurl;
             $data['happeningnowrecords'][$happeningnowrecord->id]->userLink = $userurl;
             $data['happeningnowrecords'][$happeningnowrecord->id]->roomName = $roomname;
+            $data['happeningnowrecords'][$happeningnowrecord->id]->institute = $happeningnowrecord->institute;
             $data['happeningnowrecords'][$happeningnowrecord->id]->timeend = $happeningnowrecord->timeend = trim($happeningnowrecord->timestart + ($happeningnowrecord->length * 60));
         }
 
@@ -171,6 +172,7 @@ class block_mootprogram extends block_base {
             $data['upcomingrecords'][$upcomingrecord->id]->editUrl = $editurl;
             $data['upcomingrecords'][$upcomingrecord->id]->userLink = $userurl;
             $data['upcomingrecords'][$upcomingrecord->id]->roomName = $roomname;
+            $data['upcomingrecords'][$upcomingrecord->id]->institute = $upcomingrecord->institute;
             $data['upcomingrecords'][$upcomingrecord->id]->timeend = $upcomingrecord->timeend = trim($upcomingrecord->timestart + ($upcomingrecord->length * 60));
         }
 

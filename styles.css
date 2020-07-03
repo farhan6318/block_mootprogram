@@ -1,7 +1,7 @@
 .presentation-image {
     height: 300px;
-    -o-object-fit: contain;
-    object-fit: contain;
+    -o-object-fit: cover;
+    object-fit: cover;
 }
 
 .four,
