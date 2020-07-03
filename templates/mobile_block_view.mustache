@@ -58,7 +58,31 @@
     </ion-card-content>
 </ion-card>
 <%/presentations%>
-<button ion-button block core-site-plugins-new-content title="Schedule" component="block_mootprogram" method="mobile_schedule_view"
+<button style="height: 100px" ion-button block core-site-plugins-new-content title="Schedule" component="block_mootprogram" method="mobile_schedule_view"
         [args]="{first:true}">
-    View schedule
+    <h1>View Full Program Schedule</h1>
 </button>
+<div style="width: 45%;float:left">
+    <a href="<%networkingurl%>" [capture]="true" core-link>
+        <ion-card>
+        <core-format-text text="<%networkingimage%>">
+        </core-format-text>
+        <h1>Networking Cafe</h1>
+        <p>
+            <%networkingdesc%>
+        </p>
+    </ion-card>
+    </a>
+</div>
+<div style="width: 45%;float:right">
+    <a href="<%sponsorurl%>" [capture]="true" core-link>
+    <ion-card>
+        <core-format-text text="<%sponsorimage%>">
+        </core-format-text>
+        <h1>Sponsor Solutions</h1>
+        <p>
+            <%sponsordesc%>
+        </p>
+    </ion-card>
+    </a>
+</div>

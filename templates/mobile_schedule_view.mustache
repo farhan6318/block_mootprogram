@@ -34,11 +34,18 @@
 }}
 {{=<% %>=}}
 <%#days%>
-<button ion-button block core-site-plugins-new-content title="<%day%>" component="block_mootprogram" method="mobile_schedule_view"
-        [args]="{first:false, timestamp:<%timestamp%>}">
+<button ion-button core-site-plugins-new-content title="<%day%>" component="block_mootprogram" method="mobile_schedule_view"
+        [args]="{first:false, timestamp:'<%timestamp%>'}" samePage="true">
     <%day%>
 </button>
 <%/days%>
+<%#selectedday%>
+<ion-item-divider>
+    <h1>
+        <%selectedday%>
+    </h1>
+</ion-item-divider>
+<%/selectedday%>
 <%#presentations%>
 <ion-card>
     <core-format-text text="<%image%>">

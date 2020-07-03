@@ -43,6 +43,9 @@ class mobile {
 ORDER BY timestamps");
         $days = [];
         foreach ($dates as $date) {
+            if ($args->timestamp == $date->timestamps) {
+                $args->selectedday = $date->days;
+            }
             $days[] = [
                 'day' => $date->days,
                 'timestamp' =>$date->timestamps
@@ -119,6 +122,7 @@ ORDER BY timestamps");
 
         $data = [
             'days' => $days,
+            'selectedday' => $args->selectedday,
             'presentations' => $happeningnowrecorddata
         ];
         return [
@@ -203,7 +207,14 @@ ORDER BY timestamps");
         }
 
         $data = [
-            'presentations' => $happeningnowrecorddata
+            'presentations' => $happeningnowrecorddata,
+            'networkingurl' => (new \moodle_url('/course/view.php', ['id' => 42]))->out(false),
+            'sponsorurl' => (new \moodle_url('/course/view.php', ['id' => 43]))->out(false),
+            'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 43]),
+            'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 42]),
+            'sponsorimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(43)), 'sponsor'),
+            'networkingimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(42)), 'sponsor'),,
+
         ];
         return [
             'templates' => [
