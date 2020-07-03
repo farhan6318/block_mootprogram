@@ -37,7 +37,31 @@ class mobile {
         global $OUTPUT, $DB;
         $happeningnowrecorddata = [];
 
-        $happeningnowrecords = $DB->get_records_select('block_mootprogram', '', [], 'timestart', '*');
+        $args = (object) $args;
+
+        $dates = $DB->get_records_sql("SELECT DISTINCT TO_CHAR(to_timestamp(timestart), 'DDMMYYYY') as timestamps, TO_CHAR(to_timestamp(timestart), 'Day') as days from {block_mootprogram}
+ORDER BY timestamps");
+        $days = [];
+        foreach ($dates as $date) {
+            $days[] = [
+                'day' => $date->days,
+                'timestamp' =>$date->timestamps
+            ];
+        }
+
+        if ($args->first) {
+            $param = reset($days)['timestamp'];
+        } else {
+            $param = $args->timestamp;
+        }
+
+        $sql = "SELECT p.*, ".$DB->sql_fullname()." as presentername
+                  FROM {block_mootprogram} p
+              LEFT JOIN {user} u ON u.id = p.userid
+                  WHERE ".$DB->sql_like("TO_CHAR(to_timestamp(timestart), 'DDMMYYYY')", ":param")."
+                ORDER BY timestart";
+
+        $happeningnowrecords = $DB->get_records_sql($sql, ['param' => $param]);
         foreach ($happeningnowrecords as $happeningnowrecord) {
 
             if ($imageid = $happeningnowrecord->image) {
@@ -94,6 +118,7 @@ class mobile {
         }
 
         $data = [
+            'days' => $days,
             'presentations' => $happeningnowrecorddata
         ];
         return [
@@ -120,7 +145,8 @@ class mobile {
 
         $happeningnowrecorddata = [];
 
-        $happeningnowrecords = $DB->get_records_select('block_mootprogram', 'timestart > ?', [time() - HOURSECS], 'timestart', '*',0, 4);
+        $happeningnowrecords = $DB->get_records_select('block_mootprogram', 'timestart < ? AND timestart + (length * 60) > ? ',
+            [time(), time()], 'timestart', '*',0, 4);
         foreach ($happeningnowrecords as $happeningnowrecord) {
 
             if ($imageid = $happeningnowrecord->image) {

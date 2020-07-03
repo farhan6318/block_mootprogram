@@ -33,6 +33,12 @@
     }
 }}
 {{=<% %>=}}
+<%#days%>
+<button ion-button block core-site-plugins-new-content title="<%day%>" component="block_mootprogram" method="mobile_schedule_view"
+        [args]="{first:false, timestamp:<%timestamp%>}">
+    <%day%>
+</button>
+<%/days%>
 <%#presentations%>
 <ion-card>
     <core-format-text text="<%image%>">
