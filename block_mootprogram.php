@@ -174,15 +174,41 @@ class block_mootprogram extends block_base {
             $data['upcomingrecords'][$upcomingrecord->id]->timeend = $upcomingrecord->timeend = trim($upcomingrecord->timestart + ($upcomingrecord->length * 60));
         }
 
+        $url = new moodle_url('/blocks/mootprogram/schedule.php');
+        $schedulelink = $url->out(false);
+
+        // TODO: Responsive elements.
+        // Get count of right now
+        // Then assign the classes for the cards
+        switch(count($data['happeningnowrecords'])) {
+            case 1:
+                $classes = 'one';
+                break;
+            case 2:
+                $classes = 'two';
+                break;
+            case 3:
+                $classes = 'three';
+                break;
+            default:
+                $classes = 'four';
+                break;
+        }
+        // Need to make scss file to parse and transpile to css
+        // Classes use flex basis of 24, 33, 50, 100 if 4, 3, 2, 1
+        // Classes defined in css with breakpoints going up.
+
         $this->content->text =  $OUTPUT->render_from_template('block_mootprogram/programblock', [
             'happeningnowrecord' => !empty($data['happeningnowrecords']) ? array_values($data['happeningnowrecords']) : [],
             'upcomingrecord' => array_values($data['upcomingrecords']),
             'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 43]),
             'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 42]),
             'issiteadmin' => is_siteadmin(),
-            'sponserImg' => course_summary_exporter::get_course_image(get_course(43)),
-            'cafeImg' => course_summary_exporter::get_course_image(get_course(42)),
+            'sponserImg' => course_summary_exporter::get_course_image(get_course(8)),
+            'cafeImg' => course_summary_exporter::get_course_image(get_course(8)),
             'presentationsNow' => count($happeningnowrecords) > 0 ? true : false,
+            'scheduleLink' => $schedulelink,
+            'presentationClasses' => $classes,
         ]);
 
         return $this->content;

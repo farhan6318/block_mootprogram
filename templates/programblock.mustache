@@ -3,9 +3,9 @@
 {{/presentationsNow}}
 <div class="container-fluid my-4">
     {{#presentationsNow}}
-        <div class="row mb-3 d-flex">
+        <div class="mb-3 d-flex flex-wrap">
             {{#happeningnowrecord}}
-                <div class="col-md-3 col-sm-6 d-flex">
+                <div class="d-flex {{{presentationClasses}}} m-1">
                     {{> block_mootprogram/presentation }}
                 </div>
             {{/happeningnowrecord}}
@@ -37,11 +37,15 @@
 
 <h2 class="px-3">{{#str}} upcomingsessions, block_mootprogram {{/str}}</h2>
 <div class="container-fluid mt-4">
-    <div class="row d-flex">
+    <div class="d-flex flex-wrap">
         {{#upcomingrecord}}
-            <div class="col-md-3 col-sm-6 d-flex">
+            <div class="d-flex {{{presentationClasses}}} m-1">
                 {{> block_mootprogram/presentation }}
             </div>
         {{/upcomingrecord}}
     </div>
+</div>
+
+<div class="w-100 mt-4">
+    <a class="btn btn-secondary rounded d-block w-50 mx-auto" href="{{scheduleLink}}">{{#str}} seeprogram, block_mootprogram {{/str}}</a>
 </div>
