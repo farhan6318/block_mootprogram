@@ -22,14 +22,14 @@
     }
 }
 
-@include media-breakpoint-up(md) {
+@include media-breakpoint-up(lg) {
     .four,
     .three {
         flex-basis: calc(33% - 0.5rem);
     }
 }
 
-@include media-breakpoint-up(lg) {
+@include media-breakpoint-up(xl) {
     .four {
         flex-basis: calc(25% - 0.5rem);
     }
