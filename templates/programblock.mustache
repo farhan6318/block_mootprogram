@@ -1,37 +1,41 @@
-<h2> {{#str}} rightnow, block_mootprogram {{/str}} </h2>
+{{#presentationsNow}}
+    <h2 class="px-3"> {{#str}} rightnow, block_mootprogram {{/str}} </h2>
+{{/presentationsNow}}
 <div class="container-fluid my-4">
-    <div class="row mb-3 d-flex">
-        {{#happeningnowrecord}}
-            <div class="col-md-3 col-sm-6 d-flex">
-                {{> block_mootprogram/presentation }}
-            </div>
-        {{/happeningnowrecord}}
-    </div>
+    {{#presentationsNow}}
+        <div class="row mb-3 d-flex">
+            {{#happeningnowrecord}}
+                <div class="col-md-3 col-sm-6 d-flex">
+                    {{> block_mootprogram/presentation }}
+                </div>
+            {{/happeningnowrecord}}
+        </div>
+    {{/presentationsNow}}
     <div class="row">
         <div class="col-sm-12 col-md-6">
             <div class="card">
-                <img class="card-img-top" src="{{sponserImg}}" aria-hidden="true" alt="{{#str}} sponseralt, block_mootprogram {{/str}}">
+                <img class="card-img-top presentation-image p-3" src="{{sponserImg}}" aria-hidden="true" alt="{{#str}} sponseralt, block_mootprogram {{/str}}">
                 <div class="card-body">
                     <h5 class="card-title">{{#str}} sponsersolutions, block_mootprogram {{/str}}</h5>
                     <p class="card-text mt-3">{{#str}} sponsercardtext, block_mootprogram {{/str}}<br></p>
-                    <a class="btn btn-primary" aria-label="{{#str}} navigatesponser, block_mootprogram {{/str}}" href="{{sponserLink}}">{{#str}} visitsponsers, block_mootprogram {{/str}}</a>
+                    <a class="btn btn-secondary rounded" aria-label="{{#str}} navigatesponser, block_mootprogram {{/str}}" href="{{sponserLink}}">{{#str}} visitsponsers, block_mootprogram {{/str}}</a>
                 </div>
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
             <div class="card">
-                <img class="card-img-top" src="{{cafeImg}}" aria-hidden="true" alt="{{#str}} cafealt, block_mootprogram {{/str}}">
+                <img class="card-img-top presentation-image p-3" src="{{cafeImg}}" aria-hidden="true" alt="{{#str}} cafealt, block_mootprogram {{/str}}">
                 <div class="card-body">
-                    <h5> {{#str}} networkingcafe, block_mootprogram {{/str}} </h5>
+                    <h5 class="card-title"> {{#str}} networkingcafe, block_mootprogram {{/str}} </h5>
                     <p class="card-text mt-3">{{#str}} cafecardtext, block_mootprogram {{/str}}<br></p>
-                    <a class="btn btn-primary" aria-label="{{#str}} navigatecafe, block_mootprogram {{/str}}" href="{{networkLink}}">{{#str}} joinnetworking, block_mootprogram {{/str}}</a>
+                    <a class="btn btn-secondary rounded" aria-label="{{#str}} navigatecafe, block_mootprogram {{/str}}" href="{{networkLink}}">{{#str}} joinnetworking, block_mootprogram {{/str}}</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<h2>{{#str}} upcomingsessions, block_mootprogram {{/str}}</h2>
+<h2 class="px-3">{{#str}} upcomingsessions, block_mootprogram {{/str}}</h2>
 <div class="container-fluid mt-4">
     <div class="row d-flex">
         {{#upcomingrecord}}

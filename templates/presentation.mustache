@@ -30,12 +30,12 @@
             </h5>
         {{/presenterlist}}
         <p class="card-text">{{description}}</p>
-        <a href="{{sessionurl}}" class="btn btn-secondary" >{{roomName}}</a><br/>
+        <a href="{{sessionurl}}" class="btn btn-secondary rounded" >{{roomName}}</a><br/>
         {{#discussionlink}}
-            <a href="{{discussionlink}}" class="btn btn-secondary mt-2" >{{#str}} discussion, block_mootprogram {{/str}}</a>
+            <a href="{{discussionlink}}" class="btn btn-secondary rounded mt-2" >{{#str}} discussion, block_mootprogram {{/str}}</a>
         {{/discussionlink}}
         {{#issiteadmin}}
-            <a class="btn btn-secondary mt-2" href="{{editUrl}}">{{#str}} editsession, block_mootprogram {{/str}}</a>
+            <a class="btn btn-secondary rounded mt-2" href="{{editUrl}}">{{#str}} editsession, block_mootprogram {{/str}}</a>
         {{/issiteadmin}}
     </div>
 </div>

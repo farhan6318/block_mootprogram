@@ -27,6 +27,10 @@ class block_mootprogram extends block_base {
         return false;
     }
 
+    function hide_header() {
+        return true;
+    }
+
     function get_content() {
         global $OUTPUT, $DB, $PAGE, $CFG;
         $this->content = new stdClass;
@@ -170,13 +174,14 @@ class block_mootprogram extends block_base {
         }
 
         $this->content->text =  $OUTPUT->render_from_template('block_mootprogram/programblock', [
-            'happeningnowrecord' => array_values($data['happeningnowrecords']),
+            'happeningnowrecord' => !empty($data['happeningnowrecords']) ? array_values($data['happeningnowrecords']) : [],
             'upcomingrecord' => array_values($data['upcomingrecords']),
             'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 43]),
             'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 42]),
             'issiteadmin' => is_siteadmin(),
             'sponserImg' => course_summary_exporter::get_course_image(get_course(43)),
             'cafeImg' => course_summary_exporter::get_course_image(get_course(42)),
+            'presentationsNow' => count($happeningnowrecords) > 0 ? true : false,
         ]);
 
         return $this->content;
