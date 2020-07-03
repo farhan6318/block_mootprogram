@@ -6,10 +6,12 @@
     object-fit: cover;
 }
 
+.one {
+    border: $card-border-width solid $card-border-color;
+}
 .four,
 .three,
-.two,
-.one {
+.two {
     flex-basis: calc(100% - 0.5rem);
 }
 

@@ -3,13 +3,20 @@
 {{/presentationsNow}}
 <div class="container-fluid my-4">
     {{#presentationsNow}}
-        <div class="mb-3 d-flex flex-wrap">
+        {{#multiplehappeningnow}}
+            <div class="mb-3 d-flex flex-wrap">
+                {{#happeningnowrecord}}
+                    <div class="d-flex {{{nowClasses}}} m-1">
+                        {{> block_mootprogram/presentation }}
+                    </div>
+                {{/happeningnowrecord}}
+            </div>
+        {{/multiplehappeningnow}}
+        {{^multiplehappeningnow}}
             {{#happeningnowrecord}}
-                <div class="d-flex {{{nowClasses}}} m-1">
-                    {{> block_mootprogram/presentation }}
-                </div>
+                {{> block_mootprogram/wide_presentation }}
             {{/happeningnowrecord}}
-        </div>
+        {{/multiplehappeningnow}}
     {{/presentationsNow}}
     <div class="row">
         <div class="col-sm-12 col-md-6">
@@ -37,13 +44,21 @@
 
 <h2 class="px-3">{{#str}} upcomingsessions, block_mootprogram {{/str}}</h2>
 <div class="container-fluid mt-4">
-    <div class="d-flex flex-wrap">
+    {{#multipleupcoming}}
+        <div class="d-flex flex-wrap">
+            {{#upcomingrecord}}
+                <div class="d-flex {{{upcomingClasses}}} m-1">
+                    {{> block_mootprogram/presentation }}
+                </div>
+            {{/upcomingrecord}}
+        </div>
+    {{/multipleupcoming}}
+    {{^multipleupcoming}}
         {{#upcomingrecord}}
-            <div class="d-flex {{{upcomingClasses}}} m-1">
-                {{> block_mootprogram/presentation }}
-            </div>
+            {{> block_mootprogram/wide_presentation }}
         {{/upcomingrecord}}
-    </div>
+    {{/multipleupcoming}}
+
 </div>
 
 <div class="w-100 mt-4">
