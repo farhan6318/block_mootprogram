@@ -180,18 +180,33 @@ class block_mootprogram extends block_base {
         // TODO: Responsive elements.
         // Get count of right now
         // Then assign the classes for the cards
+        // TODO: abstract
         switch(count($data['happeningnowrecords'])) {
             case 1:
-                $classes = 'one';
+                $nowclasses = 'one';
                 break;
             case 2:
-                $classes = 'two';
+                $nowclasses = 'two';
                 break;
             case 3:
-                $classes = 'three';
+                $nowclasses = 'three';
                 break;
             default:
-                $classes = 'four';
+                $nowclasses = 'four';
+                break;
+        }
+        switch(count($data['upcomingrecords'])) {
+            case 1:
+                $upcomingclasses = 'one';
+                break;
+            case 2:
+                $upcomingclasses = 'two';
+                break;
+            case 3:
+                $upcomingclasses = 'three';
+                break;
+            default:
+                $upcomingclasses = 'four';
                 break;
         }
         // Need to make scss file to parse and transpile to css
@@ -204,11 +219,12 @@ class block_mootprogram extends block_base {
             'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 43]),
             'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 42]),
             'issiteadmin' => is_siteadmin(),
-            'sponserImg' => course_summary_exporter::get_course_image(get_course(8)),
-            'cafeImg' => course_summary_exporter::get_course_image(get_course(8)),
+            'sponserImg' => course_summary_exporter::get_course_image(get_course(43)),
+            'cafeImg' => course_summary_exporter::get_course_image(get_course(42)),
             'presentationsNow' => count($happeningnowrecords) > 0 ? true : false,
             'scheduleLink' => $schedulelink,
-            'presentationClasses' => $classes,
+            'nowClasses' => $nowclasses,
+            'upcomingClasses' => $upcomingclasses,
         ]);
 
         return $this->content;
