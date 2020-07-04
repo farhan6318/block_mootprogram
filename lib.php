@@ -45,6 +45,30 @@ function course_id_mapper(stdClass $presentation) {
 }
 
 /**
+ * For a given presentation figure out the forum ID.
+ *
+ * @param string $presentation The presentation object from the DB.
+ * @return int Course ID.
+ */
+function forum_id_mapper(stdClass $presentation) {
+    if ($presentation->room == 'Education') {
+        return 463;
+    } else if ($presentation->room == 'Technology') {
+        return 466;
+    } else if ($presentation->room == 'Chinese') {
+        return 469;
+    } else if ($presentation->room == 'Spanish') {
+        return 664;
+    } else if ($presentation->room == 'German') {
+        return 665;
+    }  else if ($presentation->room == 'French') {
+        return 577;
+    } else {
+        return 0;
+    }
+}
+
+/**
  * Simple handler to turn an variable int count to some basic class strings.
  *
  * @param int $count The number of presentations we are showing

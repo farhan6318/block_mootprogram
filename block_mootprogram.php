@@ -100,6 +100,13 @@ class block_mootprogram extends block_base {
             $editurl = $eurl->out(false);
             $uurl = new moodle_url('/user/profile.php', ['id' => $happeningnowrecord->userid]);
             $userurl = $uurl->out(false);
+            $forumid = forum_id_mapper($happeningnowrecord);
+            if ($forumid !== 0) {
+                $durl = new moodle_url('/mod/forum/view.php', ['id' => $forumid]);
+
+                $data['happeningnowrecords'][$happeningnowrecord->id]->discussionlink = $happeningnowrecord->discussionlink === '' ? $durl->out(false) : $happeningnowrecord->discussionlink;
+            }
+
             $data['happeningnowrecords'][$happeningnowrecord->id]->presenterlist = $presenterlist;
             $data['happeningnowrecords'][$happeningnowrecord->id]->sessionurl = $sessionurl;
             $data['happeningnowrecords'][$happeningnowrecord->id]->editUrl = $editurl;
@@ -167,6 +174,13 @@ class block_mootprogram extends block_base {
             $editurl = $eurl->out(false);
             $uurl = new moodle_url('/user/profile.php', ['id' => $upcomingrecord->userid]);
             $userurl = $uurl->out(false);
+            $forumid = forum_id_mapper($upcomingrecord);
+            if ($forumid !== 0) {
+                $durl = new moodle_url('/mod/forum/view.php', ['id' => $forumid]);
+
+                $data['upcomingrecords'][$upcomingrecord->id]->discussionlink = $upcomingrecord->discussionlink === '' ? $durl->out(false) : $upcomingrecord->discussionlink;
+            }
+
             $data['upcomingrecords'][$upcomingrecord->id]->presenterlist = $presenterlist;
             $data['upcomingrecords'][$upcomingrecord->id]->sessionurl = $sessionurl;
             $data['upcomingrecords'][$upcomingrecord->id]->editUrl = $editurl;

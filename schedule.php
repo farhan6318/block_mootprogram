@@ -91,6 +91,11 @@ foreach ($dates as $date) {
         $presentation->editUrl = $eurl->out(false);
         $uurl = new moodle_url('/user/profile.php', ['id' => $presentation->userid]);
         $presentation->userLink = $uurl->out(false);
+        $forumid = forum_id_mapper($presentation);
+        if ($forumid !== 0) {
+            $durl = new moodle_url('/mod/forum/view.php', ['id' => $forumid]);
+            $presentation->discussionlink = $presentation->discussionlink === '' ? $durl->out(false) : $presentation->discussionlink;
+        }
 
         $presentationsdata[] = $presentation;
     }
@@ -99,13 +104,12 @@ foreach ($dates as $date) {
     } else {
         $active = null;
     }
-    $classes = presentation_classes(!empty($presentationsdata) ? count($presentationsdata) : 0);
 
     $rows[] = [
         'timestart' => get_string('day', 'block_mootprogram', $day) . trim($date->days),
         'presentation' => $presentationsdata,
         'active' => $active,
-        'classes' => $classes,
+        'classes' => 'four',
         'day' => $day,
     ];
 
