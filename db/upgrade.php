@@ -80,5 +80,19 @@ function xmldb_block_mootprogram_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2019111804, 'mootprogram');
     }
 
+    if ($oldversion < 2020070700) {
+        // Define field speakerlist to be added to block_mootprogram.
+        $table = new xmldb_table('block_mootprogram');
+        $field = new xmldb_field('recordinglink', XMLDB_TYPE_CHAR, '255', null, null, null, null, 'speakerlist');
+
+        // Conditionally launch add field recordinglink.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Mootprogram savepoint reached.
+        upgrade_block_savepoint(true, 2020070700, 'mootprogram');
+    }
+
 
 }

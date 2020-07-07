@@ -44,6 +44,9 @@ class edit_form extends moodleform {
         $mform->addElement('text', 'discussionlink', 'Discussion link', ['size' => 45]);
         $mform->setType('discussionlink', PARAM_RAW);
 
+        $mform->addElement('text', 'recordinglink', 'Recording link', ['size' => 45]);
+        $mform->setType('recordinglink', PARAM_RAW);
+
         $mform->addElement('checkbox', 'hightlight', 'Highlight');
         $mform->addElement('checkbox', 'sponsoredevent', 'Sponsoredevent');
 

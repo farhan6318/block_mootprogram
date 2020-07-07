@@ -4,6 +4,7 @@ $string['pluginname'] = 'Program highlights';
 $string['editsession'] = 'Edit session';
 $string['discussion'] = 'Discussion';
 $string['session'] = 'Session';
+$string['recording'] = 'Recording';
 $string['rightnow'] = 'On right now';
 $string['sponsersolutions'] = 'Sponsor solutions';
 $string['visitsponsers'] = 'Visit Sponsors';
