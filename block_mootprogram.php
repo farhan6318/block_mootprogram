@@ -24,7 +24,7 @@ class block_mootprogram extends block_base {
     }
 
     function has_config() {
-        return false;
+        return true;
     }
 
     function hide_header() {
@@ -190,7 +190,7 @@ class block_mootprogram extends block_base {
             $data['upcomingrecords'][$upcomingrecord->id]->timeend = $upcomingrecord->timeend = trim($upcomingrecord->timestart + ($upcomingrecord->length * 60));
         }
 
-        $url = new moodle_url('/blocks/mootprogram/schedule.php');
+        $url = new moodle_url('/blocks/mootprogram/schedule.php#'.get_config('block_mootprogram')->day);
         $schedulelink = $url->out(false);
 
         $nowclasses = presentation_classes(!empty($data['happeningnowrecords']) ? count($data['happeningnowrecords']) : 0);

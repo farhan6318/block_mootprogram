@@ -20,3 +20,5 @@ $string['timea'] = '%d %B %I:%M %p';
 $string['timeb'] = '%I:%M %p';
 $string['seeprogram'] = 'See full program';
 $string['day'] = 'Day {$a}: ';
+$string['whatday'] = 'Link to day in program';
+$string['configwhatday'] = 'Enter in only the final section of the link i.e. #tab-2 for day two.';
