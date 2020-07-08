@@ -20,6 +20,11 @@ if (is_siteadmin()) {
 } else {
     $siteadmin = null;
 }
+if (isloggedin()) {
+    $loggedin = true;
+} else {
+    $loggedin = null;
+}
 $rows = [];
 $day = 1;
 foreach ($dates as $date) {
@@ -33,6 +38,7 @@ foreach ($dates as $date) {
     $presentationsdata = [];
     foreach ($presentations as $presentation) {
         $presentation->issiteadmin = $siteadmin;
+        $presentation->isloggedin = $loggedin;
         $imageurl = null;
         if ($imageid = $presentation->image) {
             $fs = new \file_storage();
