@@ -61,7 +61,7 @@ if ($fromform = $mform->get_data()) {
         $recordid = $DB->insert_record('block_mootprogram', $fromform);
     }
 
-    $eventid = $DB->get_record('event', ['uuid' => 'mootprogram', 'instance' => $recordid]);
+    /*$eventid = $DB->get_record('event', ['uuid' => 'mootprogram', 'instance' => $recordid]);
 
     $event = new stdClass();
 
@@ -122,7 +122,7 @@ if ($fromform = $mform->get_data()) {
         $eventforupdate->update($event, false);
     } else {
         calendar_event::create($event);
-    }
+    }*/
 
     $imagename = $mform->get_new_filename('image');
     if ($imagename) {

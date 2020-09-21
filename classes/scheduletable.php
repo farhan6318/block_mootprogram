@@ -109,7 +109,10 @@ class scheduletable extends \table_sql {
 
             $record->user .= "<br/><br/>". get_presenter_list($record);
 
-            $record->image = "<img src='".$record->imageurl."' width='30px' height='30px'/>";
+            if (isset($record->imageurl)) {
+                $record->image = "<img src='".$record->imageurl."' width='30px' height='30px'/>";
+            }
+
 
             $this->rawdata[] = $record;
         }
