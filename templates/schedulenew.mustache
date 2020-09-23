@@ -1,0 +1,28 @@
+<ul class="nav nav-tabs mx-1">
+    {{#days}}
+        <li class="nav-item">
+            <a class="nav-link {{active}}" data-toggle="tab" href="#tab-{{dayname}}" {{active}}>{{dayname}}</a>
+        </li>
+    {{/days}}
+</ul>
+
+<div class="tab-content" id="myTabContent">
+
+    {{#days}}
+    <div class="tab-pane {{active}}" id="tab-{{dayname}}" >
+    <table>
+        {{#rows}}
+           <div class="d-flex flex-wrap">
+                {{#presentation}}
+                    <div class="d-flex {{classes}} m-1">
+                        {{> block_mootprogram/presentation }}
+                    </div>
+                {{/presentation}}
+            </div>
+        {{/rows}}
+        </table>
+        </div>
+    {{/days}}
+
+</div>
+

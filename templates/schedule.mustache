@@ -1,6 +1,3 @@
-{{#days}}
-    {{dayname}}
-{{/days}}
 <ul class="nav nav-tabs mx-1">
     {{#schedule}}
         <li class="nav-item">
@@ -12,14 +9,19 @@
 <div class="tab-content" id="myTabContent">
     {{#schedule}}
         <div class="tab-pane {{active}}" id="tab-{{day}}" >
-           <div class="d-flex flex-wrap">
+
+            {{#rows}}
+            <h2> {{#userdate}} {{timestart}}, {{#str}} timeb, block_mootprogram {{/str}} {{/userdate}} - {{#userdate}} {{timeend}}, {{#str}} timeb, block_mootprogram {{/str}} {{/userdate}} </h2>
+            <div class="d-flex flex-wrap">
                 {{#presentation}}
-                    <div class="d-flex {{classes}} m-1">
-                        {{> block_mootprogram/presentation }}
-                    </div>
+                <div class="d-flex {{classes}} m-1">
+                {{> block_mootprogram/presentation }}
+                </div>
                 {{/presentation}}
             </div>
+            {{/rows}}
+
+
         </div>
     {{/schedule}}
 </div>
-

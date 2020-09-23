@@ -52,7 +52,18 @@ if ($fromform = $mform->get_data()) {
     if (!isset($fromform->length))  {
         $fromform->length = 60;
     }
-    $courseid = course_id_mapper($fromform);
+
+    if ($fromform->sessionslot) {
+        $slot = $DB->get_record('block_mootprogram_timeslots', ['id' => $fromform->sessionslot]);
+        $fromform->timestart = $slot->starttime;
+        $fromform->length = $slot->sessionlength;
+    }
+
+    if ($fromform->courseid) {
+        $fromform->room = $DB->get_field('course', 'fullname', ['id' => $fromform->courseid]);
+    }
+
+    //$courseid = course_id_mapper($fromform);
 
     if ($fromform->id) {
         $recordid = $fromform->id;
@@ -60,6 +71,8 @@ if ($fromform = $mform->get_data()) {
     } else {
         $recordid = $DB->insert_record('block_mootprogram', $fromform);
     }
+
+
 
     /*$eventid = $DB->get_record('event', ['uuid' => 'mootprogram', 'instance' => $recordid]);
 
