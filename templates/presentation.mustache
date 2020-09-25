@@ -36,6 +36,9 @@
         {{/institute}}
         <p class="card-text mt-3">{{description}}</p>
         <div class="d-block mt-auto">
+            <a href="{{starurl}}" class="btn btn-secondary mt-2 mr-1 rounded star-button" data-sessionid="{{id}}" >
+                <span class="fa fa-star {{#isStared}}session-starred{{/isStared}}"></span>
+            </a>
             <a href="{{sessionurl}}" class="btn btn-secondary mt-2 mr-1 rounded" >{{roomName}}</a>
             {{#discussionlink}}
                 <a href="{{discussionlink}}" class="btn btn-secondary mt-2 mr-1 rounded" >{{#str}} discussion, block_mootprogram {{/str}}</a>

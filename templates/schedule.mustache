@@ -1,17 +1,19 @@
 <ul class="nav nav-tabs mx-1">
     {{#schedule}}
         <li class="nav-item">
-            <a class="nav-link {{active}}" data-toggle="tab" href="#tab-{{day}}" {{active}}>{{timestart}}</a>
+            <a class="nav-link {{active}} {{#starpage}} starpagetab {{/starpage}}" data-toggle="tab" href="#tab-{{day}}" {{active}} >{{timestart}}</a>
         </li>
     {{/schedule}}
 </ul>
 
 <div class="tab-content" id="myTabContent">
     {{#schedule}}
-        <div class="tab-pane {{active}}" id="tab-{{day}}" >
+        <div class="tab-pane {{active}} " id="tab-{{day}}" >
 
             {{#rows}}
-            <h2> {{#userdate}} {{timestart}}, {{#str}} timeb, block_mootprogram {{/str}} {{/userdate}} - {{#userdate}} {{timeend}}, {{#str}} timeb, block_mootprogram {{/str}} {{/userdate}} </h2>
+            {{^starpage}}
+            <h2 class="mt-3"> {{#userdate}} {{timestart}}, {{#str}} timeb, block_mootprogram {{/str}} {{/userdate}} - {{#userdate}} {{timeend}}, {{#str}} timeb, block_mootprogram {{/str}} {{/userdate}} </h2>
+            {{/starpage}}
             <div class="d-flex flex-wrap">
                 {{#presentation}}
                 <div class="d-flex {{classes}} m-1">

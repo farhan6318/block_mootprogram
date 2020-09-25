@@ -12,6 +12,7 @@ $title = get_string('programschedule', 'block_mootprogram');
 $PAGE->set_heading($title);
 $PAGE->set_title($title);
 $conferenceid = 1;
+$PAGE->requires->js_call_amd('block_mootprogram/program', 'init');
 echo $OUTPUT->header();
 $dates = $DB->get_records_sql("SELECT DISTINCT TO_CHAR(to_timestamp(timestart), 'DDMMYYYY') as timestamps, TO_CHAR(to_timestamp(timestart), 'Day') as days from {block_mootprogram} 
  WHERE conferenceid = :conferenceid ORDER BY timestamps", ['conferenceid' => $conferenceid]);
@@ -29,18 +30,33 @@ $days = [];
 
 $day = 1;
 
+if ($DB->count_records('block_mootprogram_starred', ['userid' => $USER->id])) {
+   $dates[] = 'starred';
+}
+
 foreach ($dates as $date) {
     $rows = [];
     $currentslotid = 0;
     $flag = 0;
     $countofsessioninslot = 0;
-    $sql = "SELECT p.*, ".$DB->sql_fullname()." as presentername
+    if ($date != 'starred') {
+        $sql = "SELECT p.*, ".$DB->sql_fullname()." as presentername
              FROM {block_mootprogram} p
          LEFT JOIN {user} u ON u.id = p.userid
             WHERE ".$DB->sql_like("TO_CHAR(to_timestamp(timestart), 'DDMMYYYY')", ":param")."
             ORDER BY timestart";
 
-    $presentations = $DB->get_records_sql($sql, ['param' => $date->timestamps]);
+        $presentations = $DB->get_records_sql($sql, ['param' => $date->timestamps]);
+    } else {
+        $sql = "SELECT p.*, ".$DB->sql_fullname()." as presentername
+             FROM {block_mootprogram} p
+         LEFT JOIN {user} u ON u.id = p.userid
+              JOIN {block_mootprogram_starred} ss ON ss.sessionid = p.id AND ss.userid = ?
+            ORDER BY timestart";
+
+        $presentations = $DB->get_records_sql($sql, [$USER->id]);
+    }
+
     $presentationsdata = [];
     foreach ($presentations as $presentation) {
         if ($countofsessioninslot == 1) {
@@ -80,6 +96,16 @@ foreach ($dates as $date) {
             $roomname = get_course($courseid)->fullname;
         } catch (dml_exception $e) {
             $roomname = get_string('session', 'block_mootprogram');
+        }
+
+        $presentation->starurl = (new moodle_url('/blocks/mootprogram/starsession.php', ['session' => $presentation->id]))->out();
+
+        $presentation->starpage = false;
+        if ($date == 'starred') {
+            $presentation->isStared = true;
+            $presentation->starpage = true;
+        } else if ($DB->record_exists('block_mootprogram_starred', ['userid' => $USER->id, 'sessionid' => $presentation->id])) {
+            $presentation->isStared = true;
         }
 
         $presentation->roomName = $roomname;
@@ -141,11 +167,13 @@ foreach ($dates as $date) {
     }
 
 
+
     $days[] = [
-        'timestart' => get_string('day', 'block_mootprogram', $day) . trim($date->days),
+        'timestart' => ($date != 'starred') ? get_string('day', 'block_mootprogram', $day) . trim($date->days) : 'Starred',
         'active' => $active,
         'classes' => 'four',
         'day' => $day,
+        'starpage' => ($date == 'starred') ? true : false,
         'rows' => array_values($rows)
     ];
 
@@ -156,7 +184,7 @@ foreach ($dates as $date) {
 $data = [
         'schedule' => $days
 ];
-//die(print_object($data));
+//(print_object($data));
 
 echo $OUTPUT->render_from_template('block_mootprogram/schedule', $data);
 

@@ -35,10 +35,10 @@ class edit_form extends moodleform {
         $mform->setType('length', PARAM_INT);*/
 
         $mform->addElement('select', 'conferenceid', 'Conference',
-            array_merge([0 => 'Choose'], $DB->get_records_menu('block_mootprogram_conference', [], '', 'id, name')));
+            ([0 => 'Choose'] + ($DB->get_records_menu('block_mootprogram_conference', [], '', 'id, name'))));
 
         $mform->addElement('select', 'courseid', 'Course id',
-            array_merge([0 => 'Choose'], $DB->get_records_menu('course', ['visible' => 1], '', 'id, fullname')));
+            ([0 => 'Choose'] + $DB->get_records_menu('course', ['visible' => 1], '', 'id, fullname')));
 
         $records = $DB->get_records_menu('block_mootprogram_timeslots', [], '', 'id, starttime');
         $slots = [];
@@ -46,7 +46,7 @@ class edit_form extends moodleform {
             $slots[$key] = userdate($value);
         }
         $mform->addElement('select', 'sessionslot', 'Session slot',
-            array_merge([0 => 'Choose'], $slots));
+            ([0 => 'Choose'] + $slots));
 
 
         $mform->addElement('textarea', 'description', 'Description', ["rows"=>"10", "cols"=>"40"]);

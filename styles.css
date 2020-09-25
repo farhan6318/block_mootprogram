@@ -1,3 +1,6 @@
+.session-starred {
+    color: yellow;
+}
 .presentation-image {
     height: 300px;
     -o-object-fit: cover;
