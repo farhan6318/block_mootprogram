@@ -9,6 +9,11 @@
 <div class="tab-content" id="myTabContent">
     {{#schedule}}
         <div class="tab-pane {{active}} " id="tab-{{day}}" >
+            {{#starpage}}
+            {{#nostar}}
+               <span class="mt-3"> {{#str}} nostarsessions, block_mootprogram {{/str}} </span>
+            {{/nostar}}
+            {{/starpage}}
 
             {{#rows}}
             {{^starpage}}

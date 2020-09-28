@@ -14,8 +14,12 @@ $PAGE->set_title($title);
 $conferenceid = 1;
 $PAGE->requires->js_call_amd('block_mootprogram/program', 'init');
 echo $OUTPUT->header();
-$dates = $DB->get_records_sql("SELECT DISTINCT TO_CHAR(to_timestamp(timestart), 'DDMMYYYY') as timestamps, TO_CHAR(to_timestamp(timestart), 'Day') as days from {block_mootprogram} 
- WHERE conferenceid = :conferenceid ORDER BY timestamps", ['conferenceid' => $conferenceid]);
+$dates = $DB->get_records_sql("
+ SELECT DISTINCT TO_CHAR(to_timestamp(timestart), 'DDMMYYYY') AS timestamps,
+                 TO_CHAR(to_timestamp(timestart), 'Day') AS days,
+                 TO_CHAR(to_timestamp(timestart), 'Month DD') AS daymonth
+            FROM {block_mootprogram} 
+           WHERE conferenceid = :conferenceid ORDER BY timestamps", ['conferenceid' => $conferenceid]);
 if (is_siteadmin()) {
     $siteadmin = true;
 } else {
@@ -29,10 +33,11 @@ if (isloggedin()) {
 $days = [];
 
 $day = 1;
-
-if ($DB->count_records('block_mootprogram_starred', ['userid' => $USER->id])) {
-   $dates[] = 'starred';
+$nostar = false;
+if ($DB->count_records('block_mootprogram_starred', ['userid' => $USER->id]) == 0) {
+   $nostar = true;
 }
+$dates[] = 'starred';
 
 foreach ($dates as $date) {
     $rows = [];
@@ -129,6 +134,7 @@ foreach ($dates as $date) {
             $imageurl = 'https://picsum.photos/20'.rand(0,9);
         }
         $presentation->imageurl = $imageurl;
+        $presentation->hidetimerow = true;
         $presentation->timeend = trim($presentation->timestart + ($presentation->length * 60));
 
         $url = new moodle_url('/course/view.php', ['id' => $courseid]);
@@ -169,7 +175,7 @@ foreach ($dates as $date) {
 
 
     $days[] = [
-        'timestart' => ($date != 'starred') ? get_string('day', 'block_mootprogram', $day) . trim($date->days) : 'Starred',
+        'timestart' => ($date != 'starred') ? get_string('day', 'block_mootprogram', $day) . trim($date->days) .' ' .trim($date->daymonth) : 'Starred',
         'active' => $active,
         'classes' => 'four',
         'day' => $day,
@@ -182,7 +188,8 @@ foreach ($dates as $date) {
 }
 
 $data = [
-        'schedule' => $days
+        'schedule' => $days,
+        'nostar' => $nostar
 ];
 //(print_object($data));
 

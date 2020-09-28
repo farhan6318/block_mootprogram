@@ -93,7 +93,7 @@ function get_presenter_list(stdClass $presentation) {
     $presenterlist = [];
     $speakers = explode(',', $presentation->speakerlist);
     foreach ($speakers as $speaker) {
-        $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => trim($speaker)]);
+        $speakeruserid = $DB->get_field_select('user', 'id', $DB->sql_like($DB->sql_fullname(), ':speaker'), ['speaker' => trim($speaker)], IGNORE_MULTIPLE);
         if ($speakeruserid) {
             $presenterlist[] = \html_writer::link(new moodle_url('//user/profile.php', ['id' => $speakeruserid]), trim($speaker));;
         } else {

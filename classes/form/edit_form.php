@@ -35,10 +35,13 @@ class edit_form extends moodleform {
         $mform->setType('length', PARAM_INT);*/
 
         $mform->addElement('select', 'conferenceid', 'Conference',
-            ([0 => 'Choose'] + ($DB->get_records_menu('block_mootprogram_conference', [], '', 'id, name'))));
+            ($DB->get_records_menu('block_mootprogram_conference', [], 'startdate DESC', 'id, name'))));
 
+        $defaultconference = reset($DB->get_records('block_mootprogram_conference', [], 'startdate DESC', 'id, name', 0, 1))['id'];
+        $conferenceid = get_user_preferences('conferenceid', $defaultconference);
+        $categoryid = $DB->get_field('block_mootprogram_conference', 'categoryid', ['id' => $conferenceid]);
         $mform->addElement('select', 'courseid', 'Course id',
-            ([0 => 'Choose'] + $DB->get_records_menu('course', ['visible' => 1], '', 'id, fullname')));
+            ([0 => 'Choose'] + $DB->get_records_menu('course', ['category' => $categoryid, 'visible' => 1], '', 'id, fullname')));
 
         $records = $DB->get_records_menu('block_mootprogram_timeslots', [], '', 'id, starttime');
         $slots = [];
