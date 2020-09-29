@@ -48,7 +48,7 @@ foreach ($dates as $date) {
         $sql = "SELECT p.*, ".$DB->sql_fullname()." as presentername
              FROM {block_mootprogram} p
          LEFT JOIN {user} u ON u.id = p.userid
-            WHERE ".$DB->sql_like("TO_CHAR(to_timestamp(timestart), 'DDMMYYYY')", ":param")."
+            WHERE ".$DB->sql_like("TO_CHAR(to_timestamp(timestart - (60*60)), 'DDMMYYYY')", ":param")."
             ORDER BY timestart";
 
         $presentations = $DB->get_records_sql($sql, ['param' => $date->timestamps]);
