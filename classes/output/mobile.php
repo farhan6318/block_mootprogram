@@ -63,9 +63,10 @@ ORDER BY timestamps");
                   FROM {block_mootprogram} p
               LEFT JOIN {user} u ON u.id = p.userid
                   WHERE ".$DB->sql_like("TO_CHAR(to_timestamp(timestart), 'DDMMYYYY')", ":param")."
+                  AND p.conferenceid = :conferenceid
                 ORDER BY timestart";
 
-        $happeningnowrecords = $DB->get_records_sql($sql, ['param' => $param]);
+        $happeningnowrecords = $DB->get_records_sql($sql, ['param' => $param, 'conferenceid' => $conferenceid]);
         foreach ($happeningnowrecords as $happeningnowrecord) {
 
             if ($imageid = $happeningnowrecord->image) {
@@ -88,8 +89,8 @@ ORDER BY timestamps");
                 $imageurl  = 'https://picsum.photos/20'.rand(0,9);
             }
 
-            $courseid = course_id_mapper($happeningnowrecord);
-
+            //$courseid = course_id_mapper($happeningnowrecord);
+            $courseid = $happeningnowrecord->courseid;
             $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
 
             $presenterlist = get_presenter_list($happeningnowrecord);
@@ -174,8 +175,8 @@ ORDER BY timestamps");
                 $imageurl  = 'https://picsum.photos/20'.rand(0,9);
             }
 
-            $courseid = course_id_mapper($happeningnowrecord);
-
+            //$courseid = course_id_mapper($happeningnowrecord);
+            $courseid = $happeningnowrecord->courseid;
             $sessionurl = "https://events.moodle.com/course/view.php?id=".$courseid;
 
             $presenterlist = get_presenter_list($happeningnowrecord);
@@ -209,12 +210,12 @@ ORDER BY timestamps");
 
         $data = [
             'presentations' => $happeningnowrecorddata,
-            'networkingurl' => (new \moodle_url('/course/view.php', ['id' => 42]))->out(false),
+            'networkingurl' => (new \moodle_url('/course/view.php', ['id' => 83]))->out(false),
             'sponsorurl' => (new \moodle_url('/course/view.php', ['id' => 43]))->out(false),
             'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 43]),
-            'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 42]),
+            'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 83]),
             'sponsorimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(43)), 'sponsor', ['height' => '150px', 'width' => '100%']),
-            'networkingimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(42)), 'networking', ['height' => '150px', 'width' => '100%'])
+            'networkingimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(83)), 'networking', ['height' => '150px', 'width' => '100%'])
         ];
         return [
             'templates' => [

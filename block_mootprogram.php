@@ -198,7 +198,7 @@ class block_mootprogram extends block_base {
 
         $surl = new moodle_url('/course/view.php', ['id' => 43]);
         $sponserurl = $surl->out(false);
-        $curl = new moodle_url('/course/view.php', ['id' => 42]);
+        $curl = new moodle_url('/course/view.php', ['id' => 83]);
         $cafeurl = $curl->out(false);
 
         $this->content->text =  $OUTPUT->render_from_template('block_mootprogram/programblock', [
@@ -207,10 +207,10 @@ class block_mootprogram extends block_base {
             'multiplehappeningnow' => !empty($data['happeningnowrecords']) && count($data['happeningnowrecords']) > 1 ? true : false,
             'multipleupcoming' => !empty($data['upcomingrecords']) && count($data['upcomingrecords']) > 1 ? true : false,
             'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 43]),
-            'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 42]),
+            'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 83]),
             'issiteadmin' => is_siteadmin(),
             'sponserImg' => course_summary_exporter::get_course_image(get_course(43)),
-            'cafeImg' => course_summary_exporter::get_course_image(get_course(42)),
+            'cafeImg' => course_summary_exporter::get_course_image(get_course(83)),
             'sponserLink' => $sponserurl,
             'networkLink' => $cafeurl,
             'presentationsNow' => count($happeningnowrecords) > 0 ? true : false,

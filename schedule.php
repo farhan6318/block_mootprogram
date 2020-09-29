@@ -153,7 +153,7 @@ foreach ($dates as $date) {
 
         $countofsessioninslot = $DB->count_records('block_mootprogram', ['sessionslot' => $presentation->sessionslot]);
 
-        if (($presentation->sessionslot != $currentslotid && $flag) || $countofsessioninslot == 1 || $countofsessioninslot == count($presentationsdata) ) {
+        if ($countofsessioninslot == count($presentationsdata)) {
             $currentslotid = $presentation->sessionslot;
             $slotrecord = $DB->get_record('block_mootprogram_timeslots', ['id' => $presentation->sessionslot]);
             $rows[] = ['presentation' => $presentationsdata, 'timestart' => $slotrecord->starttime, 'timeend' => trim($slotrecord->starttime + ($slotrecord->sessionlength * 60)) ];
