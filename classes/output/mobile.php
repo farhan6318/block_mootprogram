@@ -24,7 +24,7 @@
 
 namespace block_mootprogram\output;
 use core_course\external\course_summary_exporter;
-
+use file_storage;
 defined('MOODLE_INTERNAL') || die();
 
 require_once("$CFG->libdir/filestorage/file_storage.php");
