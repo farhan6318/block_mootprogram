@@ -169,7 +169,9 @@ foreach ($dates as $date) {
 
     if (!count($presentationsdata) == 0) {
         $slotrecord = $DB->get_record('block_mootprogram_timeslots', ['id' => $presentation->sessionslot]);
-        $rows[] = ['presentation' => $presentationsdata, 'timestart' => $slotrecord->starttime, 'timeend' => trim($slotrecord->starttime + ($slotrecord->sessionlength * 60)) ];
+        if (isset($slotrecord)) {
+            $rows[] = ['presentation' => $presentationsdata, 'timestart' => $slotrecord->starttime, 'timeend' => trim($slotrecord->starttime + ($slotrecord->sessionlength * 60)) ];
+        }
     }
     if (count($days) == 0) {
         $active = "active";
@@ -196,7 +198,7 @@ $data = [
         'schedule' => $days,
         'nostar' => $nostar
 ];
-//(print_object($data));
+//die(print_object($data));
 
 echo $OUTPUT->render_from_template('block_mootprogram/schedule', $data);
 
