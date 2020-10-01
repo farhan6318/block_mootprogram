@@ -20,9 +20,18 @@
 
             <div class="d-flex flex-wrap">
                 {{#presentation}}
+                {{^starpage}}
                 <div class="d-flex {{classes}} m-1">
                 {{> block_mootprogram/presentation }}
                 </div>
+                {{/starpage}}
+                {{#starpage}}
+                {{#staredid}}
+                <div class="d-flex {{classes}} m-1">
+                {{> block_mootprogram/presentation }}
+                </div>
+                {{/staredid}}
+                {{/starpage}}
                 {{/presentation}}
             </div>
             {{/rows}}

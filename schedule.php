@@ -153,29 +153,14 @@ foreach ($dates as $date) {
             $presentation->discussionlink = $presentation->discussionlink === '' ? $durl->out(false) : $presentation->discussionlink;
         }
 
-        if ($date == 'starred') {
-            if ($presentation->staredid) {
-                $presentationsdata[] = $presentation;
-            }
-        } else {
-            $presentationsdata[] = $presentation;
-        }
+        $presentationsdata[] = $presentation;
 
         $countofsessioninslot = $DB->count_records('block_mootprogram', ['sessionslot' => $presentation->sessionslot]);
 
         if ($countofsessioninslot == count($presentationsdata)) {
             $currentslotid = $presentation->sessionslot;
-            $altime = null;
             $slotrecord = $DB->get_record('block_mootprogram_timeslots', ['id' => $presentation->sessionslot]);
-            if ($slotrecord) {
-                if ($date == 'starred' && !$presentation->staredid) {
-                    $presentationsdata = [];
-                }
-                if ($date == 'starred' && $presentation->staredid) {
-                    $altime = $slotrecord->starttime;
-                }
-                $rows[] = ['presentation' => $presentationsdata, 'alttime' => $altime, 'timestart' => $slotrecord->starttime, 'timeend' => trim($slotrecord->starttime + ($slotrecord->sessionlength * 60)) ];
-            }
+            $rows[] = ['presentation' => $presentationsdata, 'timestart' => $slotrecord->starttime, 'timeend' => trim($slotrecord->starttime + ($slotrecord->sessionlength * 60)) ];
             $presentationsdata = [];
         }
         $flag = 1;
