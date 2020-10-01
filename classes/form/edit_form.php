@@ -59,6 +59,9 @@ class edit_form extends moodleform {
         $mform->setType('institute', PARAM_TEXT);
 
 
+        $mform->addElement('text', 'sessionlink', 'Session link', ['size' => 45]);
+        $mform->setType('sessionlink', PARAM_RAW);
+
         $mform->addElement('text', 'discussionlink', 'Discussion link', ['size' => 45]);
         $mform->setType('discussionlink', PARAM_RAW);
 

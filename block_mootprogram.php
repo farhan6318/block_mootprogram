@@ -86,7 +86,7 @@ class block_mootprogram extends block_base {
                 }
             }
 
-            $courseid = course_id_mapper($happeningnowrecord);
+            $courseid = ($happeningnowrecord->courseid);
 
             try {
                 $roomname = get_course($courseid)->fullname;
@@ -95,7 +95,11 @@ class block_mootprogram extends block_base {
             }
 
             $url = new moodle_url('/course/view.php', ['id' => $courseid]);
-            $sessionurl = $url->out(false);
+            if (isset($presentation->sessionlink)) {
+                $sessionurl = $url->out(false);
+            } else {
+                $sessionurl = $happeningnowrecord->sessionlink;
+            }
             $eurl = new moodle_url('/blocks/mootprogram/edit.php', ['id' => $happeningnowrecord->id]);
             $editurl = $eurl->out(false);
             $uurl = new moodle_url('/user/profile.php', ['id' => $happeningnowrecord->userid]);
@@ -160,7 +164,7 @@ class block_mootprogram extends block_base {
                 }
             }
 
-            $courseid = course_id_mapper($upcomingrecord);
+            $courseid = ($upcomingrecord->id);
 
             try {
                 $roomname = get_course($courseid)->fullname;
@@ -169,7 +173,11 @@ class block_mootprogram extends block_base {
             }
 
             $url = new moodle_url('/course/view.php', ['id' => $courseid]);
-            $sessionurl = $url->out(false);
+            if (isset($presentation->sessionlink)) {
+                $sessionurl = $url->out(false);
+            } else {
+                $sessionurl = $upcomingrecord->sessionlink;
+            }
             $eurl = new moodle_url('/blocks/mootprogram/edit.php', ['id' => $upcomingrecord->id]);
             $editurl = $eurl->out(false);
             $uurl = new moodle_url('/user/profile.php', ['id' => $upcomingrecord->userid]);

@@ -22,5 +22,5 @@ $string['seeprogram'] = 'See full program';
 $string['day'] = 'Day {$a}: ';
 $string['whatday'] = 'Link to day in program';
 $string['configwhatday'] = 'Enter in only the final section of the link i.e. #tab-2 for day two.';
-
+$string['daya'] = '%e %b';
 $string['nostarsessions'] = 'Any sessions you select using the \'stars\' will appear on this page, so you can construct your own program for the conference.';

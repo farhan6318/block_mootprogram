@@ -187,7 +187,19 @@ function xmldb_block_mootprogram_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2020070703, 'mootprogram');
     }
 
+    if ($oldversion < 2020070704) {
 
+        // Define field sessionlink to be added to block_mootprogram.
+        $table = new xmldb_table('block_mootprogram');
+        $field = new xmldb_field('sessionlink', XMLDB_TYPE_CHAR, '500', null, null, null, null, 'conferenceid');
 
+        // Conditionally launch add field sessionlink.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Mootprogram savepoint reached.
+        upgrade_block_savepoint(true, 2020070704, 'mootprogram');
+    }
 
 }

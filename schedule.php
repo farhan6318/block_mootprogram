@@ -53,10 +53,10 @@ foreach ($dates as $date) {
 
         $presentations = $DB->get_records_sql($sql, ['param' => $date->timestamps]);
     } else {
-        $sql = "SELECT p.*, ".$DB->sql_fullname()." as presentername
+        $sql = "SELECT p.*, ".$DB->sql_fullname()." as presentername, ss.id as staredid
              FROM {block_mootprogram} p
          LEFT JOIN {user} u ON u.id = p.userid
-              JOIN {block_mootprogram_starred} ss ON ss.sessionid = p.id AND ss.userid = ?
+         LEFT JOIN {block_mootprogram_starred} ss ON ss.sessionid = p.id AND ss.userid = ?
             ORDER BY timestart";
 
         $presentations = $DB->get_records_sql($sql, [$USER->id]);
@@ -138,7 +138,11 @@ foreach ($dates as $date) {
         $presentation->timeend = trim($presentation->timestart + ($presentation->length * 60));
 
         $url = new moodle_url('/course/view.php', ['id' => $courseid]);
-        $presentation->sessionurl = $url->out(false);
+        if (isset($presentation->sessionlink)) {
+            $presentation->sessionurl = $url->out(false);
+        } else {
+            $presentation->sessionurl = $presentation->sessionlink;
+        }
         $eurl = new moodle_url('/blocks/mootprogram/edit.php', ['id' => $presentation->id]);
         $presentation->editUrl = $eurl->out(false);
         $uurl = new moodle_url('/user/profile.php', ['id' => $presentation->userid]);
@@ -149,14 +153,29 @@ foreach ($dates as $date) {
             $presentation->discussionlink = $presentation->discussionlink === '' ? $durl->out(false) : $presentation->discussionlink;
         }
 
-        $presentationsdata[] = $presentation;
+        if ($date == 'starred') {
+            if ($presentation->staredid) {
+                $presentationsdata[] = $presentation;
+            }
+        } else {
+            $presentationsdata[] = $presentation;
+        }
 
         $countofsessioninslot = $DB->count_records('block_mootprogram', ['sessionslot' => $presentation->sessionslot]);
 
         if ($countofsessioninslot == count($presentationsdata)) {
             $currentslotid = $presentation->sessionslot;
+            $altime = null;
             $slotrecord = $DB->get_record('block_mootprogram_timeslots', ['id' => $presentation->sessionslot]);
-            $rows[] = ['presentation' => $presentationsdata, 'timestart' => $slotrecord->starttime, 'timeend' => trim($slotrecord->starttime + ($slotrecord->sessionlength * 60)) ];
+            if ($slotrecord) {
+                if ($date == 'starred' && !$presentation->staredid) {
+                    $presentationsdata = [];
+                }
+                if ($date == 'starred' && $presentation->staredid) {
+                    $altime = $slotrecord->starttime;
+                }
+                $rows[] = ['presentation' => $presentationsdata, 'alttime' => $altime, 'timestart' => $slotrecord->starttime, 'timeend' => trim($slotrecord->starttime + ($slotrecord->sessionlength * 60)) ];
+            }
             $presentationsdata = [];
         }
         $flag = 1;
