@@ -64,7 +64,9 @@ foreach ($dates as $date) {
     }
 
     $presentationsdata = [];
+    //die(print_object($presentations));
     foreach ($presentations as $presentation) {
+
         if ($countofsessioninslot == 1) {
             $currentslotid = $presentation->sessionslot;
         }
@@ -139,7 +141,7 @@ foreach ($dates as $date) {
         $presentation->timeend = trim($presentation->timestart + ($presentation->length * 60));
 
         $url = new moodle_url('/course/view.php', ['id' => $courseid]);
-        if (isset($presentation->sessionlink)) {
+        if (isset($presentation->sessionlink) && $presentation->sessionlink != '') {
             $presentation->sessionurl = $presentation->sessionlink;
         } else {
             $presentation->sessionurl = $url->out(false);

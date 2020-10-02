@@ -95,7 +95,7 @@ class block_mootprogram extends block_base {
             }
 
             $url = new moodle_url('/course/view.php', ['id' => $courseid]);
-            if (isset($presentation->sessionlink)) {
+            if (isset($presentation->sessionlink) && $presentation->sessionlink!='') {
                 $sessionurl = $happeningnowrecord->sessionlink;
             } else {
                 $sessionurl = $url->out(false);
@@ -164,7 +164,7 @@ class block_mootprogram extends block_base {
                 }
             }
 
-            $courseid = ($upcomingrecord->id);
+            $courseid = ($upcomingrecord->courseid);
 
             try {
                 $roomname = get_course($courseid)->fullname;
@@ -173,7 +173,7 @@ class block_mootprogram extends block_base {
             }
 
             $url = new moodle_url('/course/view.php', ['id' => $courseid]);
-            if (isset($presentation->sessionlink)) {
+            if (isset($presentation->sessionlink) && $presentation->sessionlink!='') {
                 $sessionurl = $upcomingrecord->sessionlink;
             } else {
                 $sessionurl = $url->out(false);
