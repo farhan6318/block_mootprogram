@@ -57,6 +57,7 @@ foreach ($dates as $date) {
              FROM {block_mootprogram} p
          LEFT JOIN {user} u ON u.id = p.userid
          LEFT JOIN {block_mootprogram_starred} ss ON ss.sessionid = p.id AND ss.userid = ?
+            WHERE sessionslot IS NOT NULL
             ORDER BY timestart";
 
         $presentations = $DB->get_records_sql($sql, [$USER->id]);
