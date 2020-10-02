@@ -39,9 +39,9 @@ class mobile {
         $happeningnowrecorddata = [];
 
         $args = (object) $args;
-
+        $conferenceid = 1;
         $dates = $DB->get_records_sql("SELECT DISTINCT TO_CHAR(to_timestamp(timestart), 'DDMMYYYY') as timestamps, TO_CHAR(to_timestamp(timestart), 'Day') as days from {block_mootprogram}
-ORDER BY timestamps");
+WHERE conferenceid = :conferenceid ORDER BY timestamps", ['conferenceid' => $conferenceid]);
         $days = [];
         foreach ($dates as $date) {
             if ($args->timestamp == $date->timestamps) {

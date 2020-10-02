@@ -84,6 +84,8 @@ class scheduletable extends \table_sql {
             $params['title'] = "%".$DB->sql_like_escape($this->search)."%";
         }
         //$wherep[] = 'hidefromtable != 1';
+        $where[] = 'conferenceid = :conferenceid';
+        $params['conferenceid'] = 1;
         $wherestr = implode(" AND ", $where);
         $records = $DB->get_records_select('block_mootprogram', $wherestr, $params, 'timestart ASC', '*', $this->get_page_start(), $this->get_page_size());
         $total = $DB->count_records_select('block_mootprogram', $wherestr, $params);
