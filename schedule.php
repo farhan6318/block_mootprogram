@@ -140,9 +140,9 @@ foreach ($dates as $date) {
 
         $url = new moodle_url('/course/view.php', ['id' => $courseid]);
         if (isset($presentation->sessionlink)) {
-            $presentation->sessionurl = $url->out(false);
-        } else {
             $presentation->sessionurl = $presentation->sessionlink;
+        } else {
+            $presentation->sessionurl = $url->out(false);
         }
         $eurl = new moodle_url('/blocks/mootprogram/edit.php', ['id' => $presentation->id]);
         $presentation->editUrl = $eurl->out(false);
