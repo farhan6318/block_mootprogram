@@ -185,7 +185,7 @@ foreach ($dates as $date) {
 
 
     $days[] = [
-        'timestart' => ($date != 'starred') ? get_string('day', 'block_mootprogram', $day) . trim($date->days) .' ' .trim($date->daymonth) : 'Starred',
+        'timestart' => ($date != 'starred') ? get_string('day', 'block_mootprogram', $day) . trim($date->days) .' ' .trim(str_replace(" 0", " ",$date->daymonth)) : 'Starred',
         'active' => $active,
         'classes' => 'four',
         'day' => $day,
