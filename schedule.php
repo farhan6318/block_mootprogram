@@ -163,8 +163,9 @@ foreach ($dates as $date) {
         if ($date == 'starred') {
             $sql = "SELECT COUNT(ss.id) 
                       FROM {block_mootprogram_starred} ss 
-                      JOIN {block_mootprogram} p ON p.id = ss.sessionid AND p.sessionslot = :sessionslot";
-            $countofsessioninslot = $DB->count_records_sql($sql, ['sessionslot' => $presentation->sessionslot]);
+                      JOIN {block_mootprogram} p ON p.id = ss.sessionid AND p.sessionslot = :sessionslot
+                      WHERE ss.userid = :userid";
+            $countofsessioninslot = $DB->count_records_sql($sql, ['sessionslot' => $presentation->sessionslot, 'userid' => $USER->id]);
         } else {
             $countofsessioninslot = $DB->count_records('block_mootprogram', ['sessionslot' => $presentation->sessionslot]);
         }

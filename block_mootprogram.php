@@ -32,7 +32,7 @@ class block_mootprogram extends block_base {
     }
 
     function get_content() {
-        global $OUTPUT, $DB, $PAGE, $CFG;
+        global $OUTPUT, $DB, $PAGE, $CFG, $USER;
         $PAGE->requires->js_call_amd('block_mootprogram/program', 'init');
         require_once("$CFG->libdir/filestorage/file_storage.php");
         if ($this->content != null) {
@@ -116,6 +116,10 @@ class block_mootprogram extends block_base {
                 $data['happeningnowrecords'][$happeningnowrecord->id]->discussionlink = $happeningnowrecord->discussionlink === '' ? $durl->out(false) : $happeningnowrecord->discussionlink;
             }
 
+            if ($DB->record_exists('block_mootprogram_starred', ['userid' => $USER->id, 'sessionid' => $happeningnowrecord->id])) {
+                $data['happeningnowrecords'][$happeningnowrecord->id]->isStared = true;
+            }
+
             $data['happeningnowrecords'][$happeningnowrecord->id]->presenterlist = $presenterlist;
             $data['happeningnowrecords'][$happeningnowrecord->id]->sessionurl = $sessionurl;
             $data['happeningnowrecords'][$happeningnowrecord->id]->editUrl = $editurl;
@@ -167,6 +171,10 @@ class block_mootprogram extends block_base {
                     $data['upcomingrecords'][$upcomingrecord->id]->userpictureurl = $userpictureurl;
                     $data['upcomingrecords'][$upcomingrecord->id]->profiledescription = $user->description;
                 }
+            }
+
+            if ($DB->record_exists('block_mootprogram_starred', ['userid' => $USER->id, 'sessionid' => $upcomingrecord->id])) {
+                $data['upcomingrecords'][$upcomingrecord->id]->isStared = true;
             }
 
             $courseid = ($upcomingrecord->courseid);
