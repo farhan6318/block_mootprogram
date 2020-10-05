@@ -1,9 +1,9 @@
 <?php
-
+use file_storage;
 require('../../config.php');
 require_once($CFG->dirroot . '/blocks/mootprogram/lib.php');
 $PAGE->requires->css($CFG->dirroot . '/blocks/mootprogram/styles.css');
-
+require_once("$CFG->libdir/filestorage/file_storage.php");
 $context = context_system::instance();
 $PAGE->set_context($context);
 $url = new moodle_url('/blocks/mootprogram/scheduleold.php');

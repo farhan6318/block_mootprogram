@@ -35,6 +35,7 @@ require_once($CFG->dirroot . '/blocks/mootprogram/lib.php');
 class mobile {
 
     public static function mobile_schedule_view(array $args) : array {
+        require_once("$CFG->libdir/filestorage/file_storage.php");
         global $OUTPUT, $DB;
         $happeningnowrecorddata = [];
 
@@ -147,6 +148,7 @@ WHERE conferenceid = :conferenceid ORDER BY timestamps", ['conferenceid' => $con
      * @return array HTML, javascript and otherdata
      */
     public static function mobile_block_view(array $args) : array {
+        require_once("$CFG->libdir/filestorage/file_storage.php");
         global $OUTPUT, $DB;
 
         $happeningnowrecorddata = [];
