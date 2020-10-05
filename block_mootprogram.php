@@ -35,6 +35,9 @@ class block_mootprogram extends block_base {
         global $OUTPUT, $DB, $PAGE, $CFG;
         $PAGE->requires->js_call_amd('block_mootprogram/program', 'init');
         require_once("$CFG->libdir/filestorage/file_storage.php");
+        if ($this->content != null) {
+            return $this->content;
+        }
         $this->content = new stdClass;
 
         $data = [];
@@ -228,7 +231,7 @@ class block_mootprogram extends block_base {
             'nowClasses' => $nowclasses,
             'upcomingClasses' => $upcomingclasses,
         ]);
-
+        $PAGE->requires->js_call_amd('block_mootprogram/program', 'init');
         return $this->content;
     }
 }

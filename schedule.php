@@ -56,7 +56,7 @@ foreach ($dates as $date) {
         $sql = "SELECT p.*, ".$DB->sql_fullname()." as presentername, ss.id as staredid
              FROM {block_mootprogram} p
          LEFT JOIN {user} u ON u.id = p.userid
-         LEFT JOIN {block_mootprogram_starred} ss ON ss.sessionid = p.id AND ss.userid = ?
+          JOIN {block_mootprogram_starred} ss ON ss.sessionid = p.id AND ss.userid = ?
             WHERE sessionslot IS NOT NULL
             ORDER BY timestart";
 
@@ -158,8 +158,16 @@ foreach ($dates as $date) {
 
         $presentationsdata[] = $presentation;
 
-        $countofsessioninslot = $DB->count_records('block_mootprogram', ['sessionslot' => $presentation->sessionslot]);
 
+
+        if ($date == 'starred') {
+            $sql = "SELECT COUNT(ss.id) 
+                      FROM {block_mootprogram_starred} ss 
+                      JOIN {block_mootprogram} p ON p.id = ss.sessionid AND p.sessionslot = :sessionslot";
+            $countofsessioninslot = $DB->count_records_sql($sql, ['sessionslot' => $presentation->sessionslot]);
+        } else {
+            $countofsessioninslot = $DB->count_records('block_mootprogram', ['sessionslot' => $presentation->sessionslot]);
+        }
         if ($countofsessioninslot == count($presentationsdata)) {
             $currentslotid = $presentation->sessionslot;
             $slotrecord = $DB->get_record('block_mootprogram_timeslots', ['id' => $presentation->sessionslot]);
