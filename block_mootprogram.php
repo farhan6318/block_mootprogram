@@ -33,6 +33,7 @@ class block_mootprogram extends block_base {
 
     function get_content() {
         global $OUTPUT, $DB, $PAGE, $CFG;
+        $PAGE->requires->js_call_amd('block_mootprogram/program', 'init');
         require_once("$CFG->libdir/filestorage/file_storage.php");
         $this->content = new stdClass;
 
