@@ -32,8 +32,8 @@ class block_mootprogram extends block_base {
     }
 
     function get_content() {
-        require_once("$CFG->libdir/filestorage/file_storage.php");
         global $OUTPUT, $DB, $PAGE, $CFG;
+        require_once("$CFG->libdir/filestorage/file_storage.php");
         $this->content = new stdClass;
 
         $data = [];
