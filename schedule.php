@@ -56,7 +56,7 @@ foreach ($dates as $date) {
         $sql = "SELECT p.*, ".$DB->sql_fullname()." as presentername, ss.id as staredid
              FROM {block_mootprogram} p
          LEFT JOIN {user} u ON u.id = p.userid
-              JOIN {block_mootprogram_starred} ss ON ss.sessionid = p.id AND ss.userid = ?
+         LEFT JOIN {block_mootprogram_starred} ss ON ss.sessionid = p.id AND ss.userid = ?
             WHERE sessionslot IS NOT NULL
             ORDER BY timestart";
 
