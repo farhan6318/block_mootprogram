@@ -11,7 +11,7 @@ $PAGE->set_url($url);
 $title = get_string('programschedule', 'block_mootprogram');
 $PAGE->set_heading($title);
 $PAGE->set_title($title);
-$conferenceid = 1;
+$conferenceid = 2;
 $PAGE->requires->js_call_amd('block_mootprogram/program', 'init');
 echo $OUTPUT->header();
 $dates = $DB->get_records_sql("

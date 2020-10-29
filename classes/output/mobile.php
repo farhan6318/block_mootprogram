@@ -40,7 +40,7 @@ class mobile {
         $happeningnowrecorddata = [];
 
         $args = (object) $args;
-        $conferenceid = 1;
+        $conferenceid = 2;
         $dates = $DB->get_records_sql("SELECT DISTINCT TO_CHAR(to_timestamp(timestart), 'DDMMYYYY') as timestamps, TO_CHAR(to_timestamp(timestart), 'Day') as days from {block_mootprogram}
 WHERE conferenceid = :conferenceid ORDER BY timestamps", ['conferenceid' => $conferenceid]);
         $days = [];
