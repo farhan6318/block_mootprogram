@@ -129,7 +129,7 @@ class block_mootprogram extends block_base {
             $data['happeningnowrecords'][$happeningnowrecord->id]->timeend = $happeningnowrecord->timeend = trim($happeningnowrecord->timestart + ($happeningnowrecord->length * 60));
         }
 
-        $upcomingrecords = $DB->get_records_select('block_mootprogram', 'timestart > ?', [time()], 'timestart', '*',0, 8);
+        $upcomingrecords = $DB->get_records_select('block_mootprogram', 'timestart > ?', [time()], 'timestart', '*',0, 6);
         foreach ($upcomingrecords as $upcomingrecord) {
             $upcomingrecord->issiteadmin = $siteadmin;
             $data['upcomingrecords'][$upcomingrecord->id] = ($upcomingrecord);
