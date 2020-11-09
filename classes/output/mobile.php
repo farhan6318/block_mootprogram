@@ -212,12 +212,12 @@ WHERE conferenceid = :conferenceid ORDER BY timestamps", ['conferenceid' => $con
 
         $data = [
             'presentations' => $happeningnowrecorddata,
-            'networkingurl' => (new \moodle_url('/course/view.php', ['id' => 83]))->out(false),
-            'sponsorurl' => (new \moodle_url('/course/view.php', ['id' => 43]))->out(false),
-            'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 43]),
-            'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 83]),
-            'sponsorimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(43)), 'sponsor', ['height' => '150px', 'width' => '100%']),
-            'networkingimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(83)), 'networking', ['height' => '150px', 'width' => '100%'])
+            'networkingurl' => (new \moodle_url('/course/view.php', ['id' => 95]))->out(false),
+            'sponsorurl' => (new \moodle_url('/course/view.php', ['id' => 91]))->out(false),
+            'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 91]),
+            'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 95]),
+            'sponsorimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(91)), 'sponsor', ['height' => '150px', 'width' => '100%']),
+            'networkingimage' => \html_writer::img(course_summary_exporter::get_course_image(get_course(95)), 'networking', ['height' => '150px', 'width' => '100%'])
         ];
         return [
             'templates' => [

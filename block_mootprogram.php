@@ -217,9 +217,9 @@ class block_mootprogram extends block_base {
         $nowclasses = presentation_classes(!empty($data['happeningnowrecords']) ? count($data['happeningnowrecords']) : 0);
         $upcomingclasses = presentation_classes(!empty($data['upcomingrecords'])? count($data['upcomingrecords']) : 0);
 
-        $surl = new moodle_url('/course/view.php', ['id' => 43]);
+        $surl = new moodle_url('/course/view.php', ['id' => 91]);
         $sponserurl = $surl->out(false);
-        $curl = new moodle_url('/course/view.php', ['id' => 83]);
+        $curl = new moodle_url('/course/view.php', ['id' => 95]);
         $cafeurl = $curl->out(false);
 
         $this->content->text =  $OUTPUT->render_from_template('block_mootprogram/programblock', [
@@ -227,11 +227,11 @@ class block_mootprogram extends block_base {
             'upcomingrecord' => !empty($data['upcomingrecords']) ? array_values($data['upcomingrecords']) : [],
             'multiplehappeningnow' => !empty($data['happeningnowrecords']) && count($data['happeningnowrecords']) > 1 ? true : false,
             'multipleupcoming' => !empty($data['upcomingrecords']) && count($data['upcomingrecords']) > 1 ? true : false,
-            'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 43]),
-            'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 83]),
+            'sponsordesc' => $DB->get_field('course', 'summary', ['id' => 91]),
+            'networkingdesc' => $DB->get_field('course', 'summary', ['id' => 95]),
             'issiteadmin' => is_siteadmin(),
-            'sponserImg' => course_summary_exporter::get_course_image(get_course(43)),
-            'cafeImg' => course_summary_exporter::get_course_image(get_course(83)),
+            'sponserImg' => course_summary_exporter::get_course_image(get_course(91)),
+            'cafeImg' => course_summary_exporter::get_course_image(get_course(95)),
             'sponserLink' => $sponserurl,
             'networkLink' => $cafeurl,
             'presentationsNow' => count($happeningnowrecords) > 0 ? true : false,
